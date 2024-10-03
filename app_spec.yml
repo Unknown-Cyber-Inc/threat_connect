@@ -112,7 +112,7 @@ outputPrefix: uc
 packageName: TCPB_-_Unknown_Cyber
 programLanguage: PYTHON 
 programMain: run.py
-programVersion: 0.1.0
+programVersion: 0.1.1
 runtimeLevel: Playbook
 schemaVersion: 1.1.0
 sdkVersion: 4.0.0

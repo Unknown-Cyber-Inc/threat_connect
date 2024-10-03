@@ -12,10 +12,10 @@
   "allowOnDemand": true,
   "allowRunAsUser": false,
   "apiUserTokenParam": false,
-  "note": "Take raw JSON string and output \"pretty\" version with provide indent level. Optionally sort the keys.\n",
+  "note": "This Unknown Cyber integration allows binary files to be uploaded to the Unknown Cyber platform and detailed results to be returns. Results include file info, matches, and yara generation.",
   "sdkVersion": "4.0.0",
   "playbook": {
-    "type": "Utility",
+    "type": "Malware Analysis",
     "outputVariables": [
       {
         "name": "uc.response.response",
@@ -97,7 +97,7 @@
       "feedDeployer": false,
       "viewRows": 1,
       "note": "The action to perform.",
-      "sequence": 2,
+      "sequence": 0,
       "serviceConfig": false,
       "setup": false,
       "validValues": [
@@ -120,7 +120,7 @@
       "feedDeployer": false,
       "viewRows": 1,
       "note": "A valid hash of the form ( MD5, SHA1, SHA256, SHA512 ).",
-      "sequence": 3,
+      "sequence": 2,
       "serviceConfig": false,
       "setup": false,
       "validValues": [
@@ -184,7 +184,7 @@
       "feedDeployer": false,
       "viewRows": 1,
       "note": "API key for Unknown Cyber.",
-      "sequence": 5,
+      "sequence": 1,
       "serviceConfig": false,
       "setup": false,
       "validValues": [

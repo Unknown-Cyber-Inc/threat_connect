@@ -1,1 +1,67 @@
-{"files":[{"path":"run.py","type":"File","editable":false},{"path":"playbook_app.py","type":"File","editable":false},{"path":"README.md","type":"File","editable":true},{"path":"tcex.json","template":"{\n  \"package\": {\n    \"app_name\": \"${install.programName}\",\n    \"excludes\": []\n  },\n  \"template_name\": \"utility\",\n  \"template_type\": \"playbook\"\n}\n","type":"File","editable":false},{"path":"app.py","type":"File","editable":true},{"path":"install.json","type":"File","editable":false},{"path":"app_inputs.py","type":"File","editable":true},{"path":"requirements.txt","type":"File","editable":true}],"labels":["malware","yara","uc","analyze"],"programName":"TCAB_-_6216051f-b958-41dc-94ac-d1f7e1e07ddc","displayName":"Unknown Cyber","version":"0.1.0","languageType":"Python","languageVersion":"3.11.0","appType":"Playbook"}
+{
+  "files": [
+    {
+      "path": "README.md",
+      "type": "File",
+      "editable": true
+    },
+    {
+      "path": "requirements.txt",
+      "type": "File",
+      "editable": true
+    },
+    {
+      "path": "app_spec.yml",
+      "type": "File",
+      "editable": true
+    },
+    {
+      "path": "tcex.json",
+      "template": "{\n  \"package\": {\n    \"app_name\": \"${install.programName}\",\n    \"excludes\": []\n  },\n  \"template_name\": \"utility\",\n  \"template_type\": \"playbook\"\n}\n",
+      "type": "File",
+      "editable": false
+    },
+    {
+      "path": "install.json",
+      "type": "File",
+      "editable": false
+    },
+    {
+      "path": "layout.json",
+      "type": "File",
+      "editable": true
+    },
+    {
+      "path": "app.py",
+      "type": "File",
+      "editable": true
+    },
+    {
+      "path": "app_inputs.py",
+      "type": "File",
+      "editable": true
+    },
+    {
+      "path": "run.py",
+      "type": "File",
+      "editable": false
+    },
+    {
+      "path": "playbook_app.py",
+      "type": "File",
+      "editable": false
+    }
+  ],
+  "labels": [
+    "analyze",
+    "yara",
+    "uc",
+    "malware"
+  ],
+  "programName": "TCAB_-_6216051f-b958-41dc-94ac-d1f7e1e07ddc",
+  "displayName": "Unknown Cyber",
+  "version": "0.1.0",
+  "languageType": "Python",
+  "languageVersion": "3.11.0",
+  "appType": "Playbook"
+}

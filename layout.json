@@ -1,0 +1,48 @@
+{
+    "inputs": [
+        {
+            "parameters": [
+                {
+                    "name": "tc_action"
+                }
+            ],
+            "sequence": 1,
+            "title": "Action"
+        },
+        {
+            "parameters": [
+                {
+                    "name": "api_key"
+                }
+            ],
+            "sequence": 2,
+            "title": "Connection"
+        },
+        {
+            "parameters": [
+                {
+                    "display": "tc_action in ('Get Match Analysis Results', 'Create Byte Code Yara', 'Get Matched Malicious Hashes')",
+                    "name": "hash_id"
+                },
+                {
+                    "display": "tc_action in ('Analyze Binary')",
+                    "name": "file_sample"
+                },
+                {
+                    "display": "tc_action in ('Analyze Binary')",
+                    "name": "filename"
+                },
+                {
+                    "display": "tc_action in ('Analyze Binary')",
+                    "name": "file_password"
+                },
+                {
+                    "display": "tc_action in ('Analyze Binary')",
+                    "name": "discard_unwrapped_archive"
+                }
+            ],
+            "sequence": 3,
+            "title": "Config"
+        }
+    ]
+}
