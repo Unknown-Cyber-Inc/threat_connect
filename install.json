@@ -101,9 +101,9 @@
       "serviceConfig": false,
       "setup": false,
       "validValues": [
-        "Get File Data",
-        "Get Yara Data",
-        "Get Similarities Data",
+        "Get Match Analysis Results",
+        "Create Byte Code Yara",
+        "Get Matched Malicious Hashes",
         "Analyze Binary"
       ],
       "playbookDataType": [],
@@ -248,5 +248,10 @@
     "runtimeVariables",
     "secureParams"
   ],
-  "labels": []
+  "labels": [
+    "yara",
+    "uc",
+    "malware",
+    "analyze"
+  ]
 }

@@ -6,7 +6,7 @@ from typing import Annotated, Union
 
 # third-party
 from pydantic import BaseModel
-from tcex.input.field_type import Choice, String, Sensitive, Binary, Boolean
+from tcex.input.field_type import Choice, String, Sensitive, Binary
 from tcex.input.input import Input
 from tcex.input.model.app_playbook_model import AppPlaybookModel
 
@@ -16,7 +16,7 @@ class AppBaseModel(AppPlaybookModel):
 
     # pbd: String, vv: ${KEYCHAIN}
     api_key: Union[String, Sensitive]
-    # vv: Get File Data|Get Yara Data|Get Similarities Data
+    # vv: Get Match Analysis Results|Create Byte Code Yara|Get Matched Malicious Hashes|Analyze Binary
     tc_action: Annotated[str, Choice]
 
 class AnalyzeBinary(AppBaseModel):
@@ -27,23 +27,22 @@ class AnalyzeBinary(AppBaseModel):
     file_sample: Binary
     # pbd: String, vv: ${TEXT}
     file_password: String | None
-    # pbd: Boolean
-    discard_unwrapped_archive: Boolean
+    discard_unwrapped_archive: bool = False
 
-class GetFileDataModel(AppBaseModel):
+class GetMatchAnalysisResults(AppBaseModel):
     """Action Model"""
     
     # pbd: String, vv: ${TEXT}
     hash_id: String
 
 
-class GetYaraDataModel(AppBaseModel):
+class CreateByteCodeYara(AppBaseModel):
     """Action Model"""
     
     # pbd: String, vv: ${TEXT}
     hash_id: String
 
-class GetSimilaritiesModel(AppBaseModel):
+class GetMatchedMaliciousHashes(AppBaseModel):
     """Action Model"""
     
     # pbd: String, vv: ${TEXT}
@@ -60,9 +59,9 @@ class AppInputs:
         """Return action model map."""
         _action_model_map = {
             "analyze_binary": AnalyzeBinary,
-            "get_file_data": GetFileDataModel,
-            "get_yara_data": GetYaraDataModel,
-            "get_similarities_data": GetSimilaritiesModel,
+            "get_match_analysis_results": GetMatchAnalysisResults,
+            "create_byte_code_yara": CreateByteCodeYara,
+            "get_matched_malicious_hashes": GetMatchedMaliciousHashes,
         }
         tc_action_key = tc_action.lower().replace(' ', '_')
         return _action_model_map.get(tc_action_key)

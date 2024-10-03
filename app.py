@@ -11,6 +11,8 @@ from tcex import TcEx
 # first-party
 from playbook_app import PlaybookApp  # Import default Playbook App Class (Required)
 
+invalid_hash_msg = "Invalid hash format. Must be md5, sha1, sha256, sha512."
+
 def validate_input(self, hash_id):
     """Validate input"""
 
@@ -23,7 +25,7 @@ def validate_input(self, hash_id):
     self.tcex.log.debug(f"Valid Char: '{valid_char}'")
     
     return valid_length and valid_char
-    
+
 
 class App(PlaybookApp):
     """Playbook App"""
@@ -70,7 +72,20 @@ class App(PlaybookApp):
         # Initialize other
         self.output_data = None # Store Temporary output data
 
-    def get_file_data(self):
+    def handle_error(self, message=None, code=None):
+        """Error Handling function"""
+
+        if not message:
+            message = "An error occured in the app"
+        
+        self.tcex.log.error(message)
+
+        if isinstance(code, int):
+            self.tcex.exit.exit(code, msg=message)
+        else:
+            self.tcex.exit.exit(1, msg=message)
+
+    def get_match_analysis_results(self):
         """Run the App main logic.
 
         This method should contain the core logic of the App.
@@ -83,9 +98,7 @@ class App(PlaybookApp):
         validate = validate_input(self, hash_id)
         
         if not validate:
-            self.response = None
-            self.error_message = "Invalid hash format."
-            self.tcex.exit.exit(1, "Invalid Hash Format")
+            self.handle_error(invalid_hash_msg)
         
         params = {
             "read_mask": "*",
@@ -96,7 +109,7 @@ class App(PlaybookApp):
 
         self.output_data = file_request
 
-    def get_yara_data(self):
+    def create_byte_code_yara(self):
         """Run the App main logic.
 
         This method should contain the core logic of the App.
@@ -109,10 +122,7 @@ class App(PlaybookApp):
         validate = validate_input(self, hash_id)
         
         if not validate:
-            self.response = None
-            self.error_message = "Invalid hash format."
-            # self.write_output()
-            # self.tcex.exit.exit(code=1, msg="Error validating Hash")
+            self.handle_error(invalid_hash_msg)
         
         data = {
             "files": [hash_id],
@@ -127,12 +137,12 @@ class App(PlaybookApp):
 
         self.output_data = file_request
 
-    def get_similarities_data(self):
+    def get_matched_malicious_hashes(self):
         """Run the App main logic.
 
         This method should contain the core logic of the App.
         """
-        self.tcex.log.info("Fetching similarities")
+        self.tcex.log.info("Fetching Matched Malicious Hashes")
 
         # Trim leading and trailing whitespace and initialize hash_id var
         hash_id = self.in_.hash_id.strip().lower()
@@ -140,11 +150,7 @@ class App(PlaybookApp):
         validate = validate_input(self, hash_id)
         
         if not validate:
-            self.response = None
-            self.error_message = "Invalid hash format."
-            # self.write_output()
-            # self.tcex.exit.exit(code=1, msg="Error validating Hash")
-            self.tcex.exit.exit(1, "Invalid Hash Format")
+            self.handle_error(invalid_hash_msg)
 
         params={
             "read_mask": "*",
@@ -189,7 +195,6 @@ class App(PlaybookApp):
         self.output_data = file_request
 
 
-
     def write_output(self):
         """Write the Playbook output variables.
 
@@ -208,21 +213,21 @@ class App(PlaybookApp):
         self.out.variable("uc.response.raw", json.dumps(output, indent=2))
         self.out.variable("uc.error_message", self.error_message)
         self.out.variable("uc.response.errors", json.dumps(output.get("errors", {}), indent=2))
-        if self.action == "Get File Data":
+        if self.action == "Get Match Analysis Results":
             self.out.variable("uc.response.md5", output.get("resource", {}).get("md5"))
             self.out.variable("uc.response.sha1", output.get("resource", {}).get("sha1"))
             self.out.variable("uc.response.sha256", output.get("resource", {}).get("sha256"))
             self.out.variable("uc.response.sha512", output.get("resource", {}).get("sha512"))
             self.out.variable("uc.response.response", json.dumps(output.get("resource", {}), indent=2))
-        elif self.action == "Get Yara Data":
+        elif self.action == "Create Byte Code Yara":
             self.out.variable("uc.response.response", json.dumps(output.get("resource", {}), indent=2))
-        elif self.action == "Get Similarities Data":
+        elif self.action == "Get Matched Malicious Hashes":
             self.out.variable("uc.response.response", json.dumps(output.get("resources", {}), indent=2))
-        elif self.action == "Analyse Binary":
-            self.out.variable("uc.response.md5", output.get("resource", {}).get("md5"))
-            self.out.variable("uc.response.sha1", output.get("resource", {}).get("sha1"))
-            self.out.variable("uc.response.sha256", output.get("resource", {}).get("sha256"))
-            self.out.variable("uc.response.sha512", output.get("resource", {}).get("sha512"))
+        elif self.action == "Analyze Binary":
+            self.out.variable("uc.response.md5", output.get("resources", {})[0].get("md5"))
+            self.out.variable("uc.response.sha1", output.get("resources", {})[0].get("sha1"))
+            self.out.variable("uc.response.sha256", output.get("resources", {})[0].get("sha256"))
+            self.out.variable("uc.response.sha512", output.get("resources", {})[0].get("sha512"))
             self.out.variable("uc.response.response", json.dumps(output.get("resources", {}), indent=2))
         else:
             self.out.variable("uc.response.response", json.dumps(output.get("resource", {}), indent=2))
