@@ -104,9 +104,32 @@
         "Get Match Analysis Results",
         "Create Byte Code Yara",
         "Get Matched Malicious Hashes",
-        "Analyze Binary"
+        "Analyze Binary",
+        "Get Bo LLM Behavior Report"
       ],
       "playbookDataType": [],
+      "intelType": []
+    },
+    {
+      "name": "api_key",
+      "type": "String",
+      "label": "API Key",
+      "allowMultiple": false,
+      "encrypt": true,
+      "required": true,
+      "hidden": false,
+      "feedDeployer": false,
+      "viewRows": 1,
+      "note": "API key for Unknown Cyber.",
+      "sequence": 1,
+      "serviceConfig": false,
+      "setup": false,
+      "validValues": [
+        "${KEYCHAIN}"
+      ],
+      "playbookDataType": [
+        "String"
+      ],
       "intelType": []
     },
     {
@@ -137,11 +160,11 @@
       "label": "File Sample",
       "allowMultiple": false,
       "encrypt": false,
-      "required": false,
+      "required": true,
       "hidden": false,
       "feedDeployer": false,
       "viewRows": 1,
-      "sequence": 3,
+      "sequence": 5,
       "serviceConfig": false,
       "setup": false,
       "validValues": [
@@ -155,14 +178,15 @@
     {
       "name": "filename",
       "type": "String",
-      "label": "filename",
+      "label": "Filename",
       "allowMultiple": false,
       "encrypt": false,
       "required": false,
       "hidden": false,
       "feedDeployer": false,
       "viewRows": 1,
-      "sequence": 4,
+      "note": "(Optional) - Enter a name for the file.",
+      "sequence": 6,
       "serviceConfig": false,
       "setup": false,
       "validValues": [
@@ -174,38 +198,17 @@
       "intelType": []
     },
     {
-      "name": "api_key",
-      "type": "String",
-      "label": "API Key",
-      "allowMultiple": false,
-      "encrypt": true,
-      "required": true,
-      "hidden": false,
-      "feedDeployer": false,
-      "viewRows": 1,
-      "note": "API key for Unknown Cyber.",
-      "sequence": 1,
-      "serviceConfig": false,
-      "setup": false,
-      "validValues": [
-        "${KEYCHAIN}"
-      ],
-      "playbookDataType": [
-        "String"
-      ],
-      "intelType": []
-    },
-    {
       "name": "file_password",
       "type": "String",
-      "label": "file password",
+      "label": "File Password",
       "allowMultiple": false,
       "encrypt": false,
       "required": false,
       "hidden": false,
       "feedDeployer": false,
       "viewRows": 1,
-      "sequence": 5,
+      "note": "(Optional) - Enter a password for a archive.",
+      "sequence": 7,
       "serviceConfig": false,
       "setup": false,
       "validValues": [
@@ -227,11 +230,54 @@
       "hidden": false,
       "feedDeployer": false,
       "viewRows": 1,
-      "sequence": 6,
+      "note": "(Optional) - The original archive will be discarded. **Default: False**",
+      "sequence": 8,
       "serviceConfig": false,
       "setup": false,
       "validValues": [],
       "playbookDataType": [],
+      "intelType": []
+    },
+    {
+      "name": "max_similarity",
+      "type": "String",
+      "label": "Max Similarity",
+      "default": "1",
+      "allowMultiple": false,
+      "encrypt": false,
+      "required": true,
+      "hidden": false,
+      "feedDeployer": false,
+      "viewRows": 1,
+      "note": "The maximum match value to be returned.",
+      "sequence": 4,
+      "serviceConfig": false,
+      "setup": false,
+      "validValues": [],
+      "playbookDataType": [
+        "String"
+      ],
+      "intelType": []
+    },
+    {
+      "name": "min_similarity",
+      "type": "String",
+      "label": "Min Similarity",
+      "default": "1",
+      "allowMultiple": false,
+      "encrypt": false,
+      "required": true,
+      "hidden": false,
+      "feedDeployer": false,
+      "viewRows": 1,
+      "note": "The minimum similarity value to be used.",
+      "sequence": 3,
+      "serviceConfig": false,
+      "setup": false,
+      "validValues": [],
+      "playbookDataType": [
+        "String"
+      ],
       "intelType": []
     }
   ],

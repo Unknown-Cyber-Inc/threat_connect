@@ -46,18 +46,6 @@ class App(PlaybookApp):
             self.headers["x-api-key"] = self.in_.api_key # Store Api Key from string.
         else:
             self.headers["x-api-key"] = self.in_.api_key.value # Store Api Key from Key vault
-        
-        # ACTION: 
-        # if self.action == "Analyze Binary":
-        #     self.upload_password = self.in_.file_password
-
-        # ACTION: 
-        # if self.action == "Analyze Binary":
-        #     self.upload_password = self.in_.file_password
-
-        # ACTION: 
-        # if self.action == "Analyze Binary":
-        #     self.upload_password = self.in_.file_password
 
         # ACTION: Analyze Binary
         if self.action == "Analyze Binary":
@@ -137,24 +125,48 @@ class App(PlaybookApp):
 
         self.output_data = file_request
 
+
     def get_matched_malicious_hashes(self):
         """Run the App main logic.
 
         This method should contain the core logic of the App.
         """
         self.tcex.log.info("Fetching Matched Malicious Hashes")
-
+        DEFAULT_SIM = 1.0
         # Trim leading and trailing whitespace and initialize hash_id var
         hash_id = self.in_.hash_id.strip().lower()
 
+        # Validate Hash
         validate = validate_input(self, hash_id)
         
         if not validate:
             self.handle_error(invalid_hash_msg)
+        
+        # Validate min_similarity
+        try:
+            min_similarity = float(self.in_.min_similarity)
+            if not 0 <= min_similarity <= 1:
+                min_similarity = DEFAULT_SIM
+        except (ValueError, TypeError):
+            min_similarity = DEFAULT_SIM
+
+        # Validate max_similarity
+        try:
+            max_similarity = float(self.in_.max_similarity)
+            if not 0 <= max_similarity <= 1:
+                max_similarity = DEFAULT_SIM
+        except (ValueError, TypeError):
+            max_similarity = DEFAULT_SIM
+
+        # Ensure min_similarity is less than max_similarity
+        if min_similarity >= max_similarity:
+            min_similarity = max_similarity
 
         params={
             "read_mask": "*",
-            "no_links": True
+            "no_links": True,
+            "max_threshold": max_similarity,
+            "min_threshold": min_similarity
             }
         
         file_request = requests.get(f"https://api.magic.unknowncyber.com/v2/files/{hash_id}/similarities/", params=params, headers=self.headers)
@@ -184,16 +196,38 @@ class App(PlaybookApp):
         params = {
             "no_links": True,
             "retain_wrapper": self.discard_unwrapped_archive,
-            # "ioc": False,
-            # "reprocess": False,
-            # "extract": True,
-            # "recursive": True,
         }
 
         file_request = requests.post("https://api.magic.unknowncyber.com/v2/files/", files=upload_data, params=params, headers=self.headers, data=data)
 
         self.output_data = file_request
 
+
+    def get_bo_llm_behavior_report(self):
+         """Run the App main logic.
+
+        This method should contain the core logic of the App.
+        """
+        self.tcex.log.info("Fetching data from Bo.")
+
+        # Trim leading and trailing whitespace and initialize hash_id var
+        hash_id = self.in_.hash_id.strip().lower()
+
+        # Validate Hash
+        validate = validate_input(self, hash_id)
+        
+        if not validate:
+            self.handle_error(invalid_hash_msg)
+
+        # API Request Params
+        params = {
+            "no_links": True,
+            "binary_id": hash_id,
+        }
+
+        file_request = requests.get("https://api.magic.unknowncyber.com/v2/ai/", params=params, headers=self.headers)
+
+        self.output_data = file_request
 
     def write_output(self):
         """Write the Playbook output variables.
