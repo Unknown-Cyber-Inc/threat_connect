@@ -1,0 +1,208 @@
+allowOnDemand: true
+appId: 230b94ee-2144-588c-94b7-711724ab1d75
+category: Malware Analysis
+displayName: Unknown Cyber
+features:
+- aotExecutionEnabled
+- appBuilderCompliant
+- fileParams
+- redisPasswordSupport
+- runtimeVariables
+- secureParams
+labels:
+- yara
+- uc
+- malware
+- analyze
+languageVersion: '3.11.0'
+listDelimiter: '|'
+minServerVersion: 7.2.0
+note: This Unknown Cyber integration allows binary files to be uploaded to the Unknown Cyber platform and detailed results to be returns. Results include file info, matches, and yara generation.
+notePerAction:
+- action: Get Match Analysis Results
+  note: Retrieve analysis results for a file hash.
+- action: Create Byte Code Yara
+  note: Generate a Yara rule for the specified hash.
+- action: Get Matched Malicious Hashes
+  note: Retrieve matches related to the specified hash.
+- action: Analyze Binary
+  note: Upload a sample to Unknown Cyber for analysis.
+outputData:
+- display: tc_action in ("Get Match Analysis Results")
+  outputVariables:
+  - name: tc.action
+    type: String
+  - name: uc.response.status_code
+    type: String
+  - name: uc.response.success
+    type: String
+  - name: uc.response.raw
+    type: String
+  - name: uc.error_message
+    type: String
+  - name: uc.response.errors
+    type: String
+  - name: uc.response.md5
+    type: String
+  - name: uc.response.sha1
+    type: String
+  - name: uc.response.sha256
+    type: String
+  - name: uc.response.sha512
+    type: String
+  - name: uc.response.response
+    type: String
+- display: tc_action in ("Create Byte Code Yara")
+  outputVariables:
+  - name: tc.action
+    type: String
+  - name: uc.response.status_code
+    type: String
+  - name: uc.response.success
+    type: String
+  - name: uc.response.raw
+    type: String
+  - name: uc.error_message
+    type: String
+  - name: uc.response.errors
+    type: String
+  - name: uc.response.response
+    type: String
+- display: tc_action in ("Get Matched Malicious Hashes")
+  outputVariables:
+  - name: tc.action
+    type: String
+  - name: uc.response.status_code
+    type: String
+  - name: uc.response.success
+    type: String
+  - name: uc.response.raw
+    type: String
+  - name: uc.error_message
+    type: String
+  - name: uc.response.errors
+    type: String
+  - name: uc.response.response
+    type: String
+- display: tc_action in ("Analyze Binary")
+  outputVariables:
+  - name: tc.action
+    type: String
+  - name: uc.response.status_code
+    type: String
+  - name: uc.response.success
+    type: String
+  - name: uc.response.raw
+    type: String
+  - name: uc.error_message
+    type: String
+  - name: uc.response.errors
+    type: String
+  - name: uc.response.md5
+    type: String
+  - name: uc.response.sha1
+    type: String
+  - name: uc.response.sha256
+    type: String
+  - name: uc.response.sha512
+    type: String
+  - name: uc.response.response
+    type: String
+outputPrefix: uc
+packageName: TCPB_-_Unknown_Cyber
+programLanguage: PYTHON 
+programMain: run.py
+programVersion: 0.1.1
+runtimeLevel: Playbook
+schemaVersion: 1.1.0
+sdkVersion: 4.0.0
+sections:
+- params:
+  - label: TC Action
+    name: tc_action
+    note: The action to perform.
+    required: true
+    type: Choice
+    validValues:
+    - Get Match Analysis Results
+    - Create Byte Code Yara
+    - Get Matched Malicious Hashes
+    - Analyze Binary
+  sectionName: Action
+- params:
+  - encrypt: true
+    label: API Key
+    name: api_key
+    note: API key for Unknown Cyber
+    required: true
+    type: String
+    validValues:
+    - ${KEYCHAIN}
+    playbookDataType:
+    - String
+  sectionName: Connection
+- params:
+  - display: tc_action in ("Get Match Analysis Results")
+    label: Hash ID
+    name: hash_id
+    note: A valid hash of the form ( MD5, SHA1, SHA256, SHA512 ).
+    required: true
+    type: String
+    validValues:
+    - ${TEXT}
+    playbookDataType:
+    - String
+  - display: tc_action in ("Create Byte Code Yara")
+    label: Hash ID
+    name: hash_id
+    note: A valid hash of the form ( MD5, SHA1, SHA256, SHA512 ).
+    required: true
+    type: String
+    validValues:
+    - ${TEXT}
+    playbookDataType:
+    - String
+  - display: tc_action in ("Get Matched Malicious Hashes")
+    label: Hash ID
+    name: hash_id
+    note: A valid hash of the form ( MD5, SHA1, SHA256, SHA512 ).
+    required: true
+    type: String
+    validValues:
+    - ${TEXT}
+    playbookDataType:
+    - String
+  - display: tc_action in ("Analyze Binary")
+    label: File Sample
+    name: file_sample
+    required: true
+    type: String
+    validValues:
+    - ${FILE}
+    playbookDataType:
+    - Binary
+  - display: tc_action in ("Analyze Binary")
+    label: Filename
+    name: filename
+    required: true
+    type: String
+    validValues:
+    - ${TEXT}
+    playbookDataType:
+    - String
+  - display: tc_action in ("Analyze Binary")
+    label: file password
+    name: file_password
+    required: true
+    type: String
+    validValues:
+    - ${TEXT}
+    playbookDataType:
+    - String
+  - default: false
+    display: tc_action in ("Analyze Binary")
+    label: Discard Unwrapped Archive
+    name: discard_unwrapped_archive
+    required: true
+    type: Boolean
+  sectionName: Config
