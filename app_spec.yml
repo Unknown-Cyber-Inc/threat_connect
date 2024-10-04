@@ -172,6 +172,16 @@ sections:
     - ${TEXT}
     playbookDataType:
     - String
+  - display: tc_action in ("Get Bo LLM Behavior Report")
+    label: Hash ID
+    name: hash_id
+    note: A valid hash of the form ( MD5, SHA1, SHA256, SHA512 ).
+    required: true
+    type: String
+    validValues:
+    - ${TEXT}
+    playbookDataType:
+    - String
   - display: tc_action in ("Analyze Binary")
     label: File Sample
     name: file_sample
@@ -184,16 +194,14 @@ sections:
   - display: tc_action in ("Analyze Binary")
     label: Filename
     name: filename
-    required: true
     type: String
     validValues:
     - ${TEXT}
     playbookDataType:
     - String
   - display: tc_action in ("Analyze Binary")
-    label: file password
+    label: File Password
     name: file_password
-    required: true
     type: String
     validValues:
     - ${TEXT}
@@ -203,6 +211,17 @@ sections:
     display: tc_action in ("Analyze Binary")
     label: Discard Unwrapped Archive
     name: discard_unwrapped_archive
-    required: true
     type: Boolean
+  - display: tc_action in ("Get Matched Malicious Hashes")
+    label: Min Similarity
+    name: min_similarity
+    type: String
+    playbookDataType:
+    - String
+  - display: tc_action in ("Get Matched Malicious Hashes")
+    label: Max Similarity
+    name: max_similarity
+    type: String
+    playbookDataType:
+    - String
   sectionName: Config

@@ -47,6 +47,16 @@ class GetMatchedMaliciousHashes(AppBaseModel):
     
     # pbd: String, vv: ${TEXT}
     hash_id: String
+    # pbd: String
+    max_similarity: String
+    # pbd: String
+    min_similarity: String
+
+class GetBoLLMBehaviorReport:
+    """Action Model"""
+
+    # pbd: String, vv: ${TEXT}
+    hash_id: String
 
 class AppInputs:
     """App Inputs"""
@@ -62,6 +72,7 @@ class AppInputs:
             "get_match_analysis_results": GetMatchAnalysisResults,
             "create_byte_code_yara": CreateByteCodeYara,
             "get_matched_malicious_hashes": GetMatchedMaliciousHashes,
+            "get_bo_llm_behavior_report": GetBoLLMBehaviorReport,
         }
         tc_action_key = tc_action.lower().replace(' ', '_')
         return _action_model_map.get(tc_action_key)
