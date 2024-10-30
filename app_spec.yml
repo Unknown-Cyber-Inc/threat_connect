@@ -36,8 +36,6 @@ outputData:
     type: String
   - name: uc.response.success
     type: String
-  - name: uc.response.raw
-    type: String
   - name: uc.error_message
     type: String
   - name: uc.response.errors
@@ -60,8 +58,6 @@ outputData:
     type: String
   - name: uc.response.success
     type: String
-  - name: uc.response.raw
-    type: String
   - name: uc.error_message
     type: String
   - name: uc.response.errors
@@ -75,8 +71,6 @@ outputData:
   - name: uc.response.status_code
     type: String
   - name: uc.response.success
-    type: String
-  - name: uc.response.raw
     type: String
   - name: uc.error_message
     type: String
@@ -92,8 +86,6 @@ outputData:
     type: String
   - name: uc.response.success
     type: String
-  - name: uc.response.raw
-    type: String
   - name: uc.error_message
     type: String
   - name: uc.response.errors
@@ -107,6 +99,10 @@ outputData:
   - name: uc.response.sha512
     type: String
   - name: uc.response.response
+    type: String
+  - name: uc.response.children
+    type: StringArray
+  - name: uc.response.children_count
     type: String
 outputPrefix: uc
 packageName: TCPB_-_Unknown_Cyber

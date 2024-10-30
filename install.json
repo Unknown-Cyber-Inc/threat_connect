@@ -24,12 +24,6 @@
         "encrypt": false
       },
       {
-        "name": "uc.response.raw",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
         "name": "uc.response.status_code",
         "type": "String",
         "intelType": [],
@@ -79,6 +73,30 @@
       },
       {
         "name": "uc.response.errors",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.response.matches",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.response.match_list",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.response.children",
+        "type": "StringArray",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.response.children_count",
         "type": "String",
         "intelType": [],
         "encrypt": false
@@ -149,6 +167,48 @@
       "validValues": [
         "${TEXT}"
       ],
+      "playbookDataType": [
+        "String"
+      ],
+      "intelType": []
+    },
+    {
+      "name": "min_similarity",
+      "type": "String",
+      "label": "Min Similarity",
+      "default": "1",
+      "allowMultiple": false,
+      "encrypt": false,
+      "required": true,
+      "hidden": false,
+      "feedDeployer": false,
+      "viewRows": 1,
+      "note": "The minimum similarity value to be used.",
+      "sequence": 3,
+      "serviceConfig": false,
+      "setup": false,
+      "validValues": [],
+      "playbookDataType": [
+        "String"
+      ],
+      "intelType": []
+    },
+    {
+      "name": "max_similarity",
+      "type": "String",
+      "label": "Max Similarity",
+      "default": "1",
+      "allowMultiple": false,
+      "encrypt": false,
+      "required": true,
+      "hidden": false,
+      "feedDeployer": false,
+      "viewRows": 1,
+      "note": "The maximum match value to be returned.",
+      "sequence": 4,
+      "serviceConfig": false,
+      "setup": false,
+      "validValues": [],
       "playbookDataType": [
         "String"
       ],
@@ -239,45 +299,25 @@
       "intelType": []
     },
     {
-      "name": "max_similarity",
-      "type": "String",
-      "label": "Max Similarity",
-      "default": "1",
+      "name": "response_hash",
+      "type": "Choice",
+      "label": "Response Hash",
+      "default": "SHA256",
       "allowMultiple": false,
       "encrypt": false,
-      "required": true,
+      "required": false,
       "hidden": false,
       "feedDeployer": false,
       "viewRows": 1,
-      "note": "The maximum match value to be returned.",
-      "sequence": 4,
+      "sequence": 9,
       "serviceConfig": false,
       "setup": false,
-      "validValues": [],
-      "playbookDataType": [
-        "String"
+      "validValues": [
+        "MD5",
+        "SHA1",
+        "SHA256"
       ],
-      "intelType": []
-    },
-    {
-      "name": "min_similarity",
-      "type": "String",
-      "label": "Min Similarity",
-      "default": "1",
-      "allowMultiple": false,
-      "encrypt": false,
-      "required": true,
-      "hidden": false,
-      "feedDeployer": false,
-      "viewRows": 1,
-      "note": "The minimum similarity value to be used.",
-      "sequence": 3,
-      "serviceConfig": false,
-      "setup": false,
-      "validValues": [],
-      "playbookDataType": [
-        "String"
-      ],
+      "playbookDataType": [],
       "intelType": []
     }
   ],

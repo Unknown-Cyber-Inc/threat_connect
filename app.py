@@ -56,6 +56,7 @@ class App(PlaybookApp):
         self.api_response_message = None # Variable to store the API response
         self.api_response_raw = None # Variable to store the API response
         self.error_message = None # Variable to store the API error_message
+        self.match_list = None
 
         # Initialize other
         self.output_data = None # Store Temporary output data
@@ -145,7 +146,7 @@ class App(PlaybookApp):
         # Validate min_similarity
         try:
             min_similarity = float(self.in_.min_similarity)
-            if not 0 <= min_similarity <= 1:
+            if not 0.7 <= min_similarity <= 1:
                 min_similarity = DEFAULT_SIM
         except (ValueError, TypeError):
             min_similarity = DEFAULT_SIM
@@ -153,7 +154,7 @@ class App(PlaybookApp):
         # Validate max_similarity
         try:
             max_similarity = float(self.in_.max_similarity)
-            if not 0 <= max_similarity <= 1:
+            if not 0.7 <= max_similarity <= 1:
                 max_similarity = DEFAULT_SIM
         except (ValueError, TypeError):
             max_similarity = DEFAULT_SIM
@@ -162,15 +163,24 @@ class App(PlaybookApp):
         if min_similarity >= max_similarity:
             min_similarity = max_similarity
 
+        response_hash = self.in_.response_hash.lower()
+        if response_hash == "sha1":
+            response_hash = ""
+
         params={
-            "read_mask": "*",
+            "read_mask": response_hash,
             "no_links": True,
             "max_threshold": max_similarity,
-            "min_threshold": min_similarity
+            "min_threshold": min_similarity,
+            "page_size": 500,
             }
         
         file_request = requests.get(f"https://api.magic.unknowncyber.com/v2/files/{hash_id}/similarities/", params=params, headers=self.headers)
 
+        resources = file_request.json().get("resources", [])
+
+        # Compile a list of sha1 values
+        self.match_list = ", ".join([resource[self.in_.response_hash.lower()] for resource in resources])
         
         self.output_data = file_request
 
@@ -193,18 +203,32 @@ class App(PlaybookApp):
             data["password"] = self.upload_password
 
         # API Request Params
-        params = {
+        post_params = {
             "no_links": True,
             "retain_wrapper": self.discard_unwrapped_archive,
         }
 
-        file_request = requests.post("https://api.magic.unknowncyber.com/v2/files/", files=upload_data, params=params, headers=self.headers, data=data)
+        file_response = requests.post("https://api.magic.unknowncyber.com/v2/files/", files=upload_data, params=post_params, headers=self.headers, data=data)
+
+        try:
+            response_json = file_response.json()
+            resources = response_json.get("resources", [])
+            sha256 = resources[0].get("sha256")
+        except (IndexError, ValueError, KeyError) as e:
+            self.handle_error(f"Error getting sha256 from upload: {e}. Response content: {file_response.text}")
+
+        get_params = {
+            "read_mask": "*",
+            "no_links": True,
+        }
+
+        file_request = requests.get(f"https://api.magic.unknowncyber.com/v2/files/{sha256}", params=get_params, headers=self.headers)
 
         self.output_data = file_request
 
 
     def get_bo_llm_behavior_report(self):
-         """Run the App main logic.
+        """Run the App main logic.
 
         This method should contain the core logic of the App.
         """
@@ -244,7 +268,6 @@ class App(PlaybookApp):
         self.out.variable("tc.action", self.action)
         self.out.variable("uc.response.status_code", output.get("status"))
         self.out.variable("uc.response.success", output.get("success"))
-        self.out.variable("uc.response.raw", json.dumps(output, indent=2))
         self.out.variable("uc.error_message", self.error_message)
         self.out.variable("uc.response.errors", json.dumps(output.get("errors", {}), indent=2))
         if self.action == "Get Match Analysis Results":
@@ -252,16 +275,23 @@ class App(PlaybookApp):
             self.out.variable("uc.response.sha1", output.get("resource", {}).get("sha1"))
             self.out.variable("uc.response.sha256", output.get("resource", {}).get("sha256"))
             self.out.variable("uc.response.sha512", output.get("resource", {}).get("sha512"))
+            self.out.variable("uc.response.matches", output.get("resource", {}).get("match_count"))
             self.out.variable("uc.response.response", json.dumps(output.get("resource", {}), indent=2))
         elif self.action == "Create Byte Code Yara":
             self.out.variable("uc.response.response", json.dumps(output.get("resource", {}), indent=2))
         elif self.action == "Get Matched Malicious Hashes":
+            self.out.variable("uc.response.match_list", self.match_list)
             self.out.variable("uc.response.response", json.dumps(output.get("resources", {}), indent=2))
         elif self.action == "Analyze Binary":
-            self.out.variable("uc.response.md5", output.get("resources", {})[0].get("md5"))
-            self.out.variable("uc.response.sha1", output.get("resources", {})[0].get("sha1"))
-            self.out.variable("uc.response.sha256", output.get("resources", {})[0].get("sha256"))
-            self.out.variable("uc.response.sha512", output.get("resources", {})[0].get("sha512"))
-            self.out.variable("uc.response.response", json.dumps(output.get("resources", {}), indent=2))
+            resource = output.get("resource", {})
+            children = resource.get("children", [])
+            unique_children = list(dict.fromkeys(children))
+            self.out.variable("uc.response.md5", resource.get("md5"))
+            self.out.variable("uc.response.sha1", resource.get("sha1"))
+            self.out.variable("uc.response.sha256", resource.get("sha256"))
+            self.out.variable("uc.response.sha512", resource.get("sha512"))
+            self.out.variable("uc.response.children", unique_children)
+            self.out.variable("uc.response.children_count", len(unique_children))
+            self.out.variable("uc.response.response", json.dumps(resource, indent=2))
         else:
             self.out.variable("uc.response.response", json.dumps(output.get("resource", {}), indent=2))
