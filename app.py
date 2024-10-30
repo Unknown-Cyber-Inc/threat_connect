@@ -19,11 +19,11 @@ def validate_input(self, hash_id):
     # Validate length of hash
     valid_length = len(hash_id) in (32, 40, 64, 128)
     self.tcex.log.debug(f"Valid Length: '{valid_length}'")
-    
+
     # Validate characters of hash
     valid_char = bool(re.fullmatch("[0-9a-fA-F]+", hash_id))
     self.tcex.log.debug(f"Valid Char: '{valid_char}'")
-    
+
     return valid_length and valid_char
 
 
@@ -36,7 +36,7 @@ class App(PlaybookApp):
         This method can be OPTIONALLY overridden.
         """
         super().__init__(_tcex)
-        
+
         # What action is being performed [Needs to be at top of init()]
         self.action = self.in_.tc_action
 
@@ -66,7 +66,7 @@ class App(PlaybookApp):
 
         if not message:
             message = "An error occured in the app"
-        
+
         self.tcex.log.error(message)
 
         if isinstance(code, int):
@@ -85,10 +85,10 @@ class App(PlaybookApp):
         hash_id = self.in_.hash_id.strip().lower()
 
         validate = validate_input(self, hash_id)
-        
+
         if not validate:
             self.handle_error(invalid_hash_msg)
-        
+
         params = {
             "read_mask": "*",
             "no_links": True,
@@ -104,24 +104,24 @@ class App(PlaybookApp):
         This method should contain the core logic of the App.
         """
         self.tcex.log.info("Creating Yara Rule")
-        
+
         # Trim leading and trailing whitespace and initialize hash_id var
         hash_id = self.in_.hash_id.strip().lower()
 
         validate = validate_input(self, hash_id)
-        
+
         if not validate:
             self.handle_error(invalid_hash_msg)
-        
+
         data = {
             "files": [hash_id],
         }
 
-        
+
         params = {
             "no_links": True,
         }
-        
+
         file_request = requests.post(f"https://api.magic.unknowncyber.com/v2/files/yara/", params=params, data=data)
 
         self.output_data = file_request
@@ -139,10 +139,10 @@ class App(PlaybookApp):
 
         # Validate Hash
         validate = validate_input(self, hash_id)
-        
+
         if not validate:
             self.handle_error(invalid_hash_msg)
-        
+
         # Validate min_similarity
         try:
             min_similarity = float(self.in_.min_similarity)
@@ -174,14 +174,14 @@ class App(PlaybookApp):
             "min_threshold": min_similarity,
             "page_size": 500,
             }
-        
+
         file_request = requests.get(f"https://api.magic.unknowncyber.com/v2/files/{hash_id}/similarities/", params=params, headers=self.headers)
 
         resources = file_request.json().get("resources", [])
 
         # Compile a list of sha1 values
         self.match_list = ", ".join([resource[self.in_.response_hash.lower()] for resource in resources])
-        
+
         self.output_data = file_request
 
     def analyze_binary(self):
@@ -190,13 +190,13 @@ class App(PlaybookApp):
         This method should contain the core logic of the App.
         """
         self.tcex.log.info("Analyzing Binary.")
-        
+
         # API files to be processed
         upload_data = {}
         if self.in_.filename and self.in_.file_sample:
             file_data_tuple = (self.in_.filename, self.in_.file_sample, 'application/octet-stream')
             upload_data["filedata"] = file_data_tuple
-        
+
         # API Body Params
         data = {}
         if self.upload_password:
@@ -239,7 +239,7 @@ class App(PlaybookApp):
 
         # Validate Hash
         validate = validate_input(self, hash_id)
-        
+
         if not validate:
             self.handle_error(invalid_hash_msg)
 

@@ -31,20 +31,20 @@ class AnalyzeBinary(AppBaseModel):
 
 class GetMatchAnalysisResults(AppBaseModel):
     """Action Model"""
-    
+
     # pbd: String, vv: ${TEXT}
     hash_id: String
 
 
 class CreateByteCodeYara(AppBaseModel):
     """Action Model"""
-    
+
     # pbd: String, vv: ${TEXT}
     hash_id: String
 
 class GetMatchedMaliciousHashes(AppBaseModel):
     """Action Model"""
-    
+
     # pbd: String, vv: ${TEXT}
     hash_id: String
     # vv: MD5|SHA1|SHA256
