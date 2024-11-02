@@ -26,6 +26,10 @@
                 },
                 {
                     "display": "tc_action in ('Get Matched Malicious Hashes')",
+                    "name": "response_hash"
+                },
+                {
+                    "display": "tc_action in ('Get Matched Malicious Hashes')",
                     "name": "min_similarity"
                 },
                 {
