@@ -274,10 +274,9 @@ class App(PlaybookApp):
         # API Request Params
         params = {
             "no_links": True,
-            "binary_id": hash_id,
         }
 
-        file_request = self.fetch_with_retry("https://api.magic.unknowncyber.com/v2/ai/", params=params)
+        file_request = self.fetch_with_retry(f"https://api.magic.unknowncyber.com/v2/ai/{hash_id}", params=params)
 
         self.output_data = file_request
 
