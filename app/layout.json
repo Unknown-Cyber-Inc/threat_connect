@@ -21,7 +21,7 @@
         {
             "parameters": [
                 {
-                    "display": "tc_action in ('Get Match Analysis Results', 'Create Byte Code Yara', 'Get Matched Malicious Hashes', 'Get Bo LLM Behavior Report')",
+                    "display": "tc_action in ('Get Match Analysis Results', 'Get Processing Status', 'Create Byte Code Yara', 'Get Matched Malicious Hashes', 'Get Bo LLM Behavior Report')",
                     "name": "hash_id"
                 },
                 {

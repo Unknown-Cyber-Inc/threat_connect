@@ -4,6 +4,7 @@
 import json
 import re
 import requests
+import time
 from requests.exceptions import Timeout, RequestException
 
 # third-party
@@ -45,6 +46,7 @@ class App(PlaybookApp):
         self.api_response_message = None # Variable to store the API response
         self.api_response_raw = None # Variable to store the API response
         self.match_list = None
+        self.processed = True
 
         # Initialize other
         self.output_data = None # Store Temporary output data
@@ -105,7 +107,7 @@ class App(PlaybookApp):
 
         This method should contain the core logic of the App.
         """
-        self.tcex.log.info("Starting the App.")
+        self.tcex.log.info("Fetching match analysis results.")
 
         # Trim leading and trailing whitespace and initialize hash_id var
         hash_id = self.in_.hash_id.strip().lower()
@@ -214,6 +216,34 @@ class App(PlaybookApp):
             self.handle_error("No Matches for the given parameters.")
         self.output_data = file_request
 
+    def get_processing_status(self):
+        """Run the App main logic.
+
+        Checks the status of a file
+        """
+        self.tcex.log.info("Checking file status.")
+
+        # Trim leading and trailing whitespace and initialize hash_id var
+        hash_id = self.in_.hash_id.strip().lower()
+
+        validate = self.validate_input(hash_id)
+
+        if not validate:
+            self.handle_error(INVALID_HASH_MSG)
+
+        params = {
+            "no_links": True,
+        }
+
+        file_response = self.fetch_with_retry(f"https://api.magic.unknowncyber.com/v2/files/{hash_id}/status/", method="get", params=params)
+
+        response_json = file_response.json()
+        resource = response_json.get("resource", [])
+        status = resource.get("status", "pending")
+        if status not in {"failure", "pending", "started"}:
+            self.processed = True
+        self.output_data = file_response
+
     def analyze_binary(self):
         """Run the App main logic.
 
@@ -240,21 +270,7 @@ class App(PlaybookApp):
 
         file_response = self.fetch_with_retry("https://api.magic.unknowncyber.com/v2/files/",method="post", files=upload_data, params=post_params, data=data)
 
-        try:
-            response_json = file_response.json()
-            resources = response_json.get("resources", [])
-            sha256 = resources[0].get("sha256")
-        except (IndexError, ValueError, KeyError) as e:
-            self.handle_error(f"Error getting sha256 from upload: {e}. Response content: {file_response.text}")
-
-        get_params = {
-            "read_mask": "*",
-            "no_links": True,
-        }
-
-        file_request = self.fetch_with_retry(f"https://api.magic.unknowncyber.com/v2/files/{sha256}",method="post", params=get_params)
-
-        self.output_data = file_request
+        self.output_data = file_response
 
 
     def get_bo_llm_behavior_report(self):
@@ -298,17 +314,24 @@ class App(PlaybookApp):
         self.out.variable("uc.response.success", output.get("success"))
         self.out.variable("uc.response.errors", json.dumps(output.get("errors", {}), indent=2))
         if self.action == "Get Match Analysis Results":
-            self.out.variable("uc.response.md5", output.get("resource", {}).get("md5"))
-            self.out.variable("uc.response.sha1", output.get("resource", {}).get("sha1"))
-            self.out.variable("uc.response.sha256", output.get("resource", {}).get("sha256"))
-            self.out.variable("uc.response.sha512", output.get("resource", {}).get("sha512"))
-            self.out.variable("uc.response.matches", output.get("resource", {}).get("match_count"))
-            self.out.variable("uc.response.response", json.dumps(output.get("resource", {}), indent=2))
+            resource = output.get("resource", {})
+            children = resource.get("children", [])
+            unique_children = list(dict.fromkeys(children))
+            self.out.variable("uc.response.md5", resource.get("md5"))
+            self.out.variable("uc.response.sha1", resource.get("sha1"))
+            self.out.variable("uc.response.sha256", resource.get("sha256"))
+            self.out.variable("uc.response.sha512", resource.get("sha512"))
+            self.out.variable("uc.response.matches", resource.get("match_count"))
+            self.out.variable("uc.response.children", unique_children)
+            self.out.variable("uc.response.response", json.dumps(resource, indent=2))
         elif self.action == "Create Byte Code Yara":
             self.out.variable("uc.response.response", json.dumps(output.get("resource", {}), indent=2))
         elif self.action == "Get Matched Malicious Hashes":
             self.out.variable("uc.response.match_list", self.match_list)
             self.out.variable("uc.response.response", json.dumps(output.get("resources", {}), indent=2))
+        elif self.action == "Get Processing Status":
+            self.out.variable("uc.response.processing_completed", self.processed)
+            self.out.variable("uc.response.response", json.dumps(output.get("resource", {}), indent=2))
         elif self.action == "Analyze Binary":
             resource = output.get("resource", {})
             children = resource.get("children", [])

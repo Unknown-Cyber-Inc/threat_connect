@@ -1,7 +1,7 @@
 {
   "appId": "230b94ee-2144-588c-94b7-711724ab1d75",
-  "programName": "TCAB_-_6216051f-b958-41dc-94ac-d1f7e1e07ddc",
-  "displayName": "Unknown Cyber",
+  "programName": "TCAB_-_949da663-bf76-43fe-826a-3ea97e2a97b3",
+  "displayName": "Unknown Cyber V2",
   "programVersion": "0.1.0",
   "minServerVersion": "7.2.0",
   "programLanguage": "PYTHON",
@@ -66,12 +66,6 @@
         "encrypt": false
       },
       {
-        "name": "uc.error_message",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
         "name": "uc.response.errors",
         "type": "String",
         "intelType": [],
@@ -96,7 +90,7 @@
         "encrypt": false
       },
       {
-        "name": "uc.response.children_count",
+        "name": "uc.response.processing_completed",
         "type": "String",
         "intelType": [],
         "encrypt": false
@@ -120,6 +114,7 @@
       "setup": false,
       "validValues": [
         "Get Match Analysis Results",
+        "Get Processing Status",
         "Create Byte Code Yara",
         "Get Matched Malicious Hashes",
         "Analyze Binary",
@@ -277,25 +272,6 @@
       "playbookDataType": [
         "String"
       ],
-      "intelType": []
-    },
-    {
-      "name": "discard_unwrapped_archive",
-      "type": "Boolean",
-      "label": "Discard Unwrapped Archive",
-      "default": "false",
-      "allowMultiple": false,
-      "encrypt": false,
-      "required": false,
-      "hidden": false,
-      "feedDeployer": false,
-      "viewRows": 1,
-      "note": "(Optional) - The original archive will be discarded. **Default: False**",
-      "sequence": 8,
-      "serviceConfig": false,
-      "setup": false,
-      "validValues": [],
-      "playbookDataType": [],
       "intelType": []
     },
     {
