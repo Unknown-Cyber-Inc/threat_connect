@@ -2,4 +2,7 @@
 .python-version
 
 # Threat Connect Videos
-Threat Connect Tutorial Videos/
+ThreatConnect Tutorial Videos/
+
+# Example Playbooks - Internal
+ExamplePlaybooks/Internal/

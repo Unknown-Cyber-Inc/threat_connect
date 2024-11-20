@@ -93,6 +93,8 @@ class App(PlaybookApp):
                 self.tcex.log.warning(f"Timeout occurred on attempt {attempt + 1}/{MAX_RETRIES}. Retrying...")
                 attempt += 1
             except RequestException as e:
+                if re.search(r"/ai/", url) and response is not None:
+                    self.handle_error(f"Prompt is Empty. Check file type.")
                 self.handle_error(f"Request failed: {e}")
                 break
         return None
