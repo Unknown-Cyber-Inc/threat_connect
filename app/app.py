@@ -4,7 +4,6 @@
 import json
 import re
 import requests
-import time
 from requests.exceptions import Timeout, RequestException
 
 # third-party
@@ -15,6 +14,7 @@ from playbook_app import PlaybookApp  # Import default Playbook App Class (Requi
 
 INVALID_HASH_MSG = "Invalid hash format. Must be md5, sha1, sha256, sha512."
 MAX_RETRIES = 3
+TIMEOUT = 600
 
 # Only change if you understand what the consequences are.
 RETAIN_WRAPPER = True
@@ -87,18 +87,32 @@ class App(PlaybookApp):
             try:
                 response = None
                 if method == "get":
-                    response = requests.get(url, params=params, headers=self.headers)
+                    response = requests.get(
+                        url,
+                        params=params,
+                        headers=self.headers,
+                        timeout=TIMEOUT
+                    )
                 elif method == "post":
-                    response = requests.post(url, params=params, headers=self.headers, data=data, files=files)
+                    response = requests.post(
+                        url,
+                        params=params,
+                        headers=self.headers,
+                        data=data,
+                        files=files,
+                        timeout=TIMEOUT
+                    )
 
                 response.raise_for_status()
                 return response
             except Timeout:
-                self.tcex.log.warning(f"Timeout occurred on attempt {attempt + 1}/{MAX_RETRIES}. Retrying...")
+                self.tcex.log.warning(
+                    f"Timeout occurred on attempt {attempt + 1}/{MAX_RETRIES}. Retrying..."
+                )
                 attempt += 1
             except RequestException as e:
                 if re.search(r"/ai/", url) and response is not None:
-                    self.handle_error(f"Prompt is Empty. Check file type.")
+                    self.handle_error("Prompt is Empty. Check file type.")
                 self.handle_error(f"Request failed: {e}")
                 break
         return None
@@ -124,7 +138,9 @@ class App(PlaybookApp):
             "no_links": True,
         }
 
-        file_request = self.fetch_with_retry(f"https://api.magic.unknowncyber.com/v2/files/{hash_id}", method="get", params=params)
+        file_request = self.fetch_with_retry(
+            f"https://api.magic.unknowncyber.com/v2/files/{hash_id}", method="get", params=params
+        )
 
         self.output_data = file_request
 
@@ -153,7 +169,12 @@ class App(PlaybookApp):
             "no_links": True,
         }
 
-        file_request = self.fetch_with_retry("https://api.magic.unknowncyber.com/v2/files/yara/",method="post", params=params, data=data)
+        file_request = self.fetch_with_retry(
+            "https://api.magic.unknowncyber.com/v2/files/yara/",
+            method="post",
+            params=params,
+            data=data
+        )
 
         self.output_data = file_request
 
@@ -164,7 +185,7 @@ class App(PlaybookApp):
         This method should contain the core logic of the App.
         """
         self.tcex.log.info("Fetching Matched Malicious Hashes")
-        DEFAULT_SIM = 1.0
+        default_sim = 1.0
         # Trim leading and trailing whitespace and initialize hash_id var
         hash_id = self.in_.hash_id.strip().lower()
 
@@ -178,17 +199,17 @@ class App(PlaybookApp):
         try:
             min_similarity = float(self.in_.min_similarity)
             if not 0.7 <= min_similarity <= 1:
-                min_similarity = DEFAULT_SIM
+                min_similarity = default_sim
         except (ValueError, TypeError):
-            min_similarity = DEFAULT_SIM
+            min_similarity = default_sim
 
         # Validate max_similarity
         try:
             max_similarity = float(self.in_.max_similarity)
             if not 0.7 <= max_similarity <= 1:
-                max_similarity = DEFAULT_SIM
+                max_similarity = default_sim
         except (ValueError, TypeError):
-            max_similarity = DEFAULT_SIM
+            max_similarity = default_sim
 
         # Ensure min_similarity is less than max_similarity
         if min_similarity >= max_similarity:
@@ -206,12 +227,18 @@ class App(PlaybookApp):
             "page_size": 500,
             }
 
-        file_request = self.fetch_with_retry(f"https://api.magic.unknowncyber.com/v2/files/{hash_id}/similarities/", method="get", params=params)
+        file_request = self.fetch_with_retry(
+            f"https://api.magic.unknowncyber.com/v2/files/{hash_id}/similarities/",
+            method="get",
+            params=params
+        )
 
         resources = file_request.json().get("resources", [])
 
         # Compile a list of sha1 values
-        self.match_list = ", ".join([resource[self.in_.response_hash.lower()] for resource in resources])
+        self.match_list = ", ".join(
+            [resource[self.in_.response_hash.lower()] for resource in resources]
+        )
 
         # Error for no matches. Else response is "".
         if self.in_.no_match_error and self.match_list == "":
@@ -237,7 +264,11 @@ class App(PlaybookApp):
             "no_links": True,
         }
 
-        file_response = self.fetch_with_retry(f"https://api.magic.unknowncyber.com/v2/files/{hash_id}/status/", method="get", params=params)
+        file_response = self.fetch_with_retry(
+            f"https://api.magic.unknowncyber.com/v2/files/{hash_id}/status/",
+            method="get",
+            params=params
+        )
 
         response_json = file_response.json()
         resource = response_json.get("resource", [])
@@ -270,7 +301,13 @@ class App(PlaybookApp):
             "retain_wrapper": RETAIN_WRAPPER,
         }
 
-        file_response = self.fetch_with_retry("https://api.magic.unknowncyber.com/v2/files/",method="post", files=upload_data, params=post_params, data=data)
+        file_response = self.fetch_with_retry(
+            "https://api.magic.unknowncyber.com/v2/files/",
+            method="post",
+            files=upload_data,
+            params=post_params,
+            data=data
+        )
 
         self.output_data = file_response
 
@@ -296,7 +333,11 @@ class App(PlaybookApp):
             "no_links": True,
         }
 
-        file_request = self.fetch_with_retry(f"https://api.magic.unknowncyber.com/v2/ai/{hash_id}/", method="get", params=params)
+        file_request = self.fetch_with_retry(
+            f"https://api.magic.unknowncyber.com/v2/ai/{hash_id}/",
+            method="get",
+            params=params
+        )
 
         self.output_data = file_request
 
@@ -327,21 +368,32 @@ class App(PlaybookApp):
             self.out.variable("uc.response.children", unique_children)
             self.out.variable("uc.response.response", json.dumps(resource, indent=2))
         elif self.action == "Create Byte Code Yara":
-            self.out.variable("uc.response.response", json.dumps(output.get("resource", {}), indent=2))
+            self.out.variable(
+                "uc.response.response",
+                json.dumps(output.get("resource", {}), indent=2)
+            )
         elif self.action == "Get Matched Malicious Hashes":
             self.out.variable("uc.response.match_list", self.match_list)
-            self.out.variable("uc.response.response", json.dumps(output.get("resources", {}), indent=2))
+            self.out.variable(
+                "uc.response.response",
+                json.dumps(output.get("resources", {}), indent=2)
+            )
         elif self.action == "Get Processing Status":
             self.out.variable("uc.response.processing_completed", self.processed)
-            self.out.variable("uc.response.response", json.dumps(output.get("resource", {}), indent=2))
+            self.out.variable(
+                "uc.response.response",
+                json.dumps(output.get("resource", {}), indent=2)
+            )
         elif self.action == "Analyze Binary":
-            resource = output.get("resource", {})
-            children = resource.get("children", [])
-            unique_children = list(dict.fromkeys(children))
+            resource = output.get("resources", {})[0]
+            # resource = output.get("resources", {})
             self.out.variable("uc.response.md5", resource.get("md5"))
             self.out.variable("uc.response.sha1", resource.get("sha1"))
             self.out.variable("uc.response.sha256", resource.get("sha256"))
             self.out.variable("uc.response.sha512", resource.get("sha512"))
             self.out.variable("uc.response.response", json.dumps(resource, indent=2))
         else:
-            self.out.variable("uc.response.response", json.dumps(output.get("resource", {}), indent=2))
+            self.out.variable(
+                "uc.response.response",
+                json.dumps(output.get("resource", {}), indent=2)
+            )
