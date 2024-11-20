@@ -16,6 +16,9 @@ from playbook_app import PlaybookApp  # Import default Playbook App Class (Requi
 INVALID_HASH_MSG = "Invalid hash format. Must be md5, sha1, sha256, sha512."
 MAX_RETRIES = 3
 
+# Only change if you understand what the consequences are.
+RETAIN_WRAPPER = True
+
 
 class App(PlaybookApp):
     """Playbook App"""
@@ -40,7 +43,6 @@ class App(PlaybookApp):
         # ACTION: Analyze Binary
         if self.action == "Analyze Binary":
             self.upload_password = self.in_.file_password
-            self.discard_unwrapped_archive = self.in_.discard_unwrapped_archive
 
         # Initialize outputs
         self.api_response_message = None # Variable to store the API response
@@ -265,7 +267,7 @@ class App(PlaybookApp):
         # API Request Params
         post_params = {
             "no_links": True,
-            "retain_wrapper": self.discard_unwrapped_archive,
+            "retain_wrapper": RETAIN_WRAPPER,
         }
 
         file_response = self.fetch_with_retry("https://api.magic.unknowncyber.com/v2/files/",method="post", files=upload_data, params=post_params, data=data)
@@ -294,7 +296,7 @@ class App(PlaybookApp):
             "no_links": True,
         }
 
-        file_request = self.fetch_with_retry(f"https://api.magic.unknowncyber.com/v2/ai/{hash_id}", params=params)
+        file_request = self.fetch_with_retry(f"https://api.magic.unknowncyber.com/v2/ai/{hash_id}/", method="get", params=params)
 
         self.output_data = file_request
 
@@ -340,8 +342,6 @@ class App(PlaybookApp):
             self.out.variable("uc.response.sha1", resource.get("sha1"))
             self.out.variable("uc.response.sha256", resource.get("sha256"))
             self.out.variable("uc.response.sha512", resource.get("sha512"))
-            self.out.variable("uc.response.children", unique_children)
-            self.out.variable("uc.response.children_count", len(unique_children))
             self.out.variable("uc.response.response", json.dumps(resource, indent=2))
         else:
             self.out.variable("uc.response.response", json.dumps(output.get("resource", {}), indent=2))

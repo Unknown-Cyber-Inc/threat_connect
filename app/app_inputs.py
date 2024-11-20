@@ -27,7 +27,6 @@ class AnalyzeBinary(AppBaseModel):
     file_sample: Binary
     # pbd: String, vv: ${TEXT}
     file_password: String | None
-    discard_unwrapped_archive: bool = False
 
 class GetMatchAnalysisResults(AppBaseModel):
     """Action Model"""
@@ -35,6 +34,11 @@ class GetMatchAnalysisResults(AppBaseModel):
     # pbd: String, vv: ${TEXT}
     hash_id: String
 
+class GetProcessingStatus(AppBaseModel):
+    """Action Model"""
+
+    # pbd: String, vv: ${TEXT}
+    hash_id: String
 
 class CreateByteCodeYara(AppBaseModel):
     """Action Model"""
@@ -53,6 +57,8 @@ class GetMatchedMaliciousHashes(AppBaseModel):
     max_similarity: String
     # pbd: String
     min_similarity: String
+    no_match_error: bool = False
+
 
 class GetBoLLMBehaviorReport:
     """Action Model"""
@@ -71,6 +77,7 @@ class AppInputs:
         """Return action model map."""
         _action_model_map = {
             "analyze_binary": AnalyzeBinary,
+            "get_processing_status": GetProcessingStatus,
             "get_match_analysis_results": GetMatchAnalysisResults,
             "create_byte_code_yara": CreateByteCodeYara,
             "get_matched_malicious_hashes": GetMatchedMaliciousHashes,
