@@ -185,10 +185,4 @@ Ask's Unknown Cyber's AI assistant for a human readable version of the byte code
 | Variable | Type | Description | Examples |
 | -------- | ---- | ----------- | -------- |
 
-## Docs and Help
-
-- [App Builder](https://knowledge.threatconnect.com/docs/app-builder-overview)
-- [TcEx Repo](https://github.com/ThreatConnect-Inc/tcex)
-- [Threat Connect Example Repos](https://github.com/ThreatConnect-Inc/threatconnect-playbooks)
-
 Modified: 11/20/24
