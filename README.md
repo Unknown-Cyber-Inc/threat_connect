@@ -16,9 +16,13 @@ A ThreatConnect Playbook is a feature that automates cybersecurity workflows by 
 
 ### Examples
 
-- [1 - Upload File to Unknown Cyber](./ExamplePlaybooks/External/1%20-%20Upload%20File%20to%20Unknown%20Cyber.pbxz)
-- [2 - Check Processing Status](./ExamplePlaybooks/External/2%20-%20Check%20Processing%20Status.pbxz)
-- [3 - Get Matches](./ExamplePlaybooks/External/3%20-%20Get%20Matches.pbxz)
+- [1 - Upload File to Unknown Cyber](./ExamplePlaybooks/External/1%20-%20Upload%20File%20to%20Unknown%20Cyber.pbxz) - This is example playbook 1 of 3 for processing a file through Unknown Cyber. This playbook demonstrates how to use the "Analyze Binary" action in the Unknown Cyber App. When a document is uploaded to TC, it takes the document and it's archive password, if included, and sends it to Unknown Cyber for Analysis. It then creates a file indicator in TC and appends a "uc-processing" tag to the indicator to let stage 2 know the file being processed.
+
+- [2 - Check Processing Status](./ExamplePlaybooks/External/2%20-%20Check%20Processing%20Status.pbxz) - This is example playbook 2 of 3 for processing a file through Unknown Cyber. This playbook is designed to run every 5 minutes and checks the status of all files and documents in TC tagged with "uc-processing." If the file or document has successfully been processed by Unknown Cyber with a response of "success", then the "uc-processing" tag will be removed and a "uc-processed" tag will be added to it. In the event of an error in the Unknown Cyber app, the file will be skipped, and try again in 5 minutes.
+
+- [3 - Get Matches](./ExamplePlaybooks/External/3%20-%20Get%20Matches.pbxz) - This is example playbook 3 of 3 for processing a file through Unknown Cyber. This playbook triggers when a file is first tagged with "uc-processed" and proceeds to get similar matches for the file and checks for children of the file, which will be added to TC's file indicators and given a tag of "uc-processing" to repeat stage 2 and 3 with.
+
+> Note: Not all files will have matches and some files that have matches will not be 1.0 matches. The similarity score can be adjusted between 0.7 and 1.0 when using the "Get Matches Malicious Hashes" action in the Unknown Cyber App. The default is to only show 1.0 matches.
 
 ### Videos
 
@@ -28,6 +32,7 @@ A ThreatConnect Playbook is a feature that automates cybersecurity workflows by 
 
 Unknown Cyber's app is called "Unknown Cyber". In a Threat Connect Playbook, you can use as may instances of the UnknownCyber app as you like. Each of the instances are called `Jobs`. A Job houses different operations based on the selected action. Below are the available actions and the standard parameters used for the Unknown Cyber app.
 
+<!-- markdownlint-disable MD001 -->
 #### General Inputs
 
 | Variable | Type | Default | Description |
@@ -49,6 +54,8 @@ Unknown Cyber's app is called "Unknown Cyber". In a Threat Connect Playbook, you
 ---
 
 ### Get Match Analysis Results
+
+Retrieve Unknown Cyber's analysis for a specified file hash. For a more granular look at a hashes data, use the `uc.response.json`.
 
 #### Inputs
 
@@ -76,6 +83,8 @@ Unknown Cyber's app is called "Unknown Cyber". In a Threat Connect Playbook, you
 
 ### Get Processing Status
 
+Retrieves the processing status for a hash. Once the file is done processing, it will set the `uc.response.processing_completed` to True. For a more granular look at the current file status, use the `uc.response.json`.
+
 #### Inputs
 
 | Variable | Type | Default | Description |
@@ -91,6 +100,8 @@ Unknown Cyber's app is called "Unknown Cyber". In a Threat Connect Playbook, you
 ---
 
 ### Create Byte Code Yara
+
+Automatically generates a Yara rule for the specified hash.
 
 #### Inputs
 
@@ -109,6 +120,8 @@ Unknown Cyber's app is called "Unknown Cyber". In a Threat Connect Playbook, you
 
 ### Get Matched Malicious Hashes
 
+Gets a list of hashes that match the entered hash. By default, only perfect matches, 1.0, are retrieved. This can be adjusted using the Max and Min Similarity options.
+
 #### Inputs
 
 | Variable | Type | Default | Description |
@@ -119,6 +132,8 @@ Unknown Cyber's app is called "Unknown Cyber". In a Threat Connect Playbook, you
 | Response Hash | *Dropdown* | Sha1 | This allows other hashes besides the default to be returned. |
 | No Match Error | *Boolean* | False | Setting this to True will cause the app to throw an error is their are no matches. |
 
+> Note: If you enter a minimum similarity score higher than the maximum similarity score, the scores will be set to equal the Max Similarity entered.
+
 #### Outputs
 
 | Variable | Type | Description | Examples |
@@ -128,6 +143,8 @@ Unknown Cyber's app is called "Unknown Cyber". In a Threat Connect Playbook, you
 ---
 
 ### Analyze Binary
+
+Upload a binary sample to Unknown Cyber for analysis.
 
 #### Inputs
 
@@ -149,6 +166,8 @@ Unknown Cyber's app is called "Unknown Cyber". In a Threat Connect Playbook, you
 ---
 
 ### Get Bo LLM Behavior Report
+
+Ask's Unknown Cyber's AI assistant for a human readable version of the byte code and gives its analysis on the code.
 
 #### Inputs
 
