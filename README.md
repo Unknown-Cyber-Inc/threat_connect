@@ -22,7 +22,8 @@ A ThreatConnect Playbook is a feature that automates cybersecurity workflows by 
 
 - [3 - Get Matches](./ExamplePlaybooks/External/3%20-%20Get%20Matches.pbxz) - This is example playbook 3 of 3 for processing a file through Unknown Cyber. This playbook triggers when a file is first tagged with "uc-processed" and proceeds to get similar matches for the file and checks for children of the file, which will be added to TC's file indicators and given a tag of "uc-processing" to repeat stage 2 and 3 with.
 
-> Note: Not all files will have matches and some files that have matches will not be 1.0 matches. The similarity score can be adjusted between 0.7 and 1.0 when using the "Get Matches Malicious Hashes" action in the Unknown Cyber App. The default is to only show 1.0 matches.
+> [!NOTE]
+> Not all files will have matches and some files that have matches will not be 1.0 matches. The similarity score can be adjusted between 0.7 and 1.0 when using the "Get Matches Malicious Hashes" action in the Unknown Cyber App. The default is to only show 1.0 matches.
 
 ### Videos
 
@@ -137,7 +138,8 @@ Gets a list of hashes that match the entered hash. By default, only perfect matc
 | Response Hash | *Dropdown* | Sha1 | This allows other hashes besides the default to be returned. |
 | No Match Error | *Boolean* | False | Setting this to True will cause the app to throw an error is their are no matches. |
 
-> Note: If you enter a minimum similarity score higher than the maximum similarity score, the scores will be set to equal the Max Similarity entered.
+> [!NOTE]
+> If you enter a minimum similarity score higher than the maximum similarity score, the scores will be set to equal the Max Similarity entered.
 
 #### Outputs
 
@@ -184,5 +186,8 @@ Ask's Unknown Cyber's AI assistant for a human readable version of the byte code
 
 | Variable | Type | Description | Examples |
 | -------- | ---- | ----------- | -------- |
+
+> [!NOTE]
+> Their are no custom output variables for Get Bo LLM Behavior Report. Use the `uc.response.json`.
 
 Modified: 11/20/24
