@@ -27,12 +27,12 @@ A ThreatConnect Playbook is a feature that automates cybersecurity workflows by 
 
 ### Videos
 
-0. [TC Unknown Cyber Overview](https://drive.google.com/file/d/1wd51GFKGZtmgr4PLGnbt8SkS56ifW_st/view?usp=sharing) - Shows an overview of the three example playbooks in action.
-1. [Adding Unknown Cyber API Key to TC](https://drive.google.com/file/d/1GW4sRRiErd3xa3fJvOrwMfrh5eVnrjAJ/view?usp=sharing) - Explanation of how to add an Unknown Cyber API Key to Threat Connect's Keychain Variables.
-2. [Adding Unknown Cyber Example Playbooks to TC](https://drive.google.com/file/d/16RtRhplNEapFxRhrHSVsFgicfFsyAxwh/view?usp=sharing) - Adding Unknown Cyber's example playbooks to Threat Connect.
-3. [Upload File to Unknown Cyber Playbook Example](https://drive.google.com/file/d/1DX17AMmEDz9XChVWKf-zK0B_E5FRw9S4/view?usp=sharing) - An overview of how the "1. Upload File to Unknown Cyber" playbook works.
-4. [Check Processing Status Playbook Example](https://drive.google.com/file/d/1FfgjxUzRE0MI6zV8-vYDdIUJ-wB7P8cV/view?usp=sharing) - An overview of how the "2. Check Processing Status" playbook works.
-5. [Get Matches Playbook Example](https://drive.google.com/file/d/1TiACFtKTYzHj2_vJo8SWso28zAu_ogB3/view?usp=sharing) - An overview of how the "3. Get Matches" playbook works.
+0. [TC Unknown Cyber Overview](https://drive.google.com/file/d/1zVaUd7KocbCppnuZ1gcAPZs-e4yrXRJS/view?usp=drive_link) - Shows an overview of the three example playbooks in action.
+1. [Adding Unknown Cyber API Key to TC](https://drive.google.com/file/d/1YaMNAGW4Tj79kA0yBTo_hn6IoqJWcHyi/view?usp=drive_link) - Explanation of how to add an Unknown Cyber API Key to Threat Connect's Keychain Variables.
+2. [Adding Unknown Cyber Example Playbooks to TC](https://drive.google.com/file/d/1IQjn8qD0-uUGdFvgDvBWewv4YTaUNe-H/view?usp=drive_link) - Adding Unknown Cyber's example playbooks to Threat Connect.
+3. [Upload File to Unknown Cyber Playbook Example](https://drive.google.com/file/d/1fEnvjZZ_dRwyTnHbriyGVuoCpdhFyO3K/view?usp=drive_link) - An overview of how the "1. Upload File to Unknown Cyber" playbook works.
+4. [Check Processing Status Playbook Example](https://drive.google.com/file/d/1qjkfKBico03kbZ1-g-hAAbexO28dgNdM/view?usp=drive_link) - An overview of how the "2. Check Processing Status" playbook works.
+5. [Get Matches Playbook Example](https://drive.google.com/file/d/1aniMp5Wy_0XBWFn89whT6wGoYvKorvto/view?usp=drive_link) - An overview of how the "3. Get Matches" playbook works.
 
 ## App
 
