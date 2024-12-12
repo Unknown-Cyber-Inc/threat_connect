@@ -240,8 +240,11 @@ class App(PlaybookApp):
             [resource[self.in_.response_hash.lower()] for resource in resources]
         )
 
+        if self.match_list == "":
+            self.match_list = None
+
         # Error for no matches. Else response is "".
-        if self.in_.no_match_error and self.match_list == "":
+        if self.in_.no_match_error and not self.match_list:
             self.handle_error("No Matches for the given parameters.")
         self.output_data = file_request
 
@@ -273,8 +276,8 @@ class App(PlaybookApp):
         response_json = file_response.json()
         resource = response_json.get("resource", [])
         status = resource.get("status", "pending")
-        if status not in {"failure", "pending", "started"}:
-            self.processed = True
+        if status in {"failure", "pending", "started"}:
+            self.processed = False
         self.output_data = file_response
 
     def analyze_binary(self):
@@ -347,53 +350,78 @@ class App(PlaybookApp):
         This method should be overridden with the output variables defined in the install.json
         configuration file.
         """
-        if not self.output_data is None:
-            output = self.output_data.json()
-        else:
-            output = {}
+        output = self.output_data.json() if self.output_data is not None else {}
         self.log.info('Writing Output')
         self.out.variable("tc.action", self.action)
         self.out.variable("uc.response.status_code", output.get("status"))
         self.out.variable("uc.response.success", output.get("success"))
         self.out.variable("uc.response.errors", json.dumps(output.get("errors", {}), indent=2))
-        if self.action == "Get Match Analysis Results":
-            resource = output.get("resource", {})
-            children = resource.get("children", [])
-            unique_children = list(dict.fromkeys(children))
-            self.out.variable("uc.response.md5", resource.get("md5"))
-            self.out.variable("uc.response.sha1", resource.get("sha1"))
-            self.out.variable("uc.response.sha256", resource.get("sha256"))
-            self.out.variable("uc.response.sha512", resource.get("sha512"))
-            self.out.variable("uc.response.matches", resource.get("match_count"))
-            self.out.variable("uc.response.children", unique_children)
-            self.out.variable("uc.response.response", json.dumps(resource, indent=2))
-        elif self.action == "Create Byte Code Yara":
-            self.out.variable(
-                "uc.response.response",
-                json.dumps(output.get("resource", {}), indent=2)
-            )
-        elif self.action == "Get Matched Malicious Hashes":
-            self.out.variable("uc.response.match_list", self.match_list)
-            self.out.variable(
-                "uc.response.response",
-                json.dumps(output.get("resources", {}), indent=2)
-            )
-        elif self.action == "Get Processing Status":
-            self.out.variable("uc.response.processing_completed", self.processed)
-            self.out.variable(
-                "uc.response.response",
-                json.dumps(output.get("resource", {}), indent=2)
-            )
-        elif self.action == "Analyze Binary":
-            resource = output.get("resources", {})[0]
-            # resource = output.get("resources", {})
-            self.out.variable("uc.response.md5", resource.get("md5"))
-            self.out.variable("uc.response.sha1", resource.get("sha1"))
-            self.out.variable("uc.response.sha256", resource.get("sha256"))
-            self.out.variable("uc.response.sha512", resource.get("sha512"))
-            self.out.variable("uc.response.response", json.dumps(resource, indent=2))
-        else:
-            self.out.variable(
-                "uc.response.response",
-                json.dumps(output.get("resource", {}), indent=2)
-            )
+
+        def write_variables(variables_dict):
+            for var_name, value in variables_dict.items():
+                self.out.variable(var_name, value)
+
+        match self.action:
+            case "Get Match Analysis Results":
+                resource = output.get("resource", {})
+                exif = resource.get("exif", {})
+                children = resource.get("children", [])
+                unique_children = list(dict.fromkeys(children))
+                variables = {
+                    "uc.response.md5": resource.get("md5"),
+                    "uc.response.sha1": resource.get("sha1"),
+                    "uc.response.sha256": resource.get("sha256"),
+                    "uc.response.sha512": resource.get("sha512"),
+                    "uc.response.threat_level": resource.get("threat"),
+                    "uc.response.evasiveness": resource.get("evasiveness"),
+                    "uc.response.category": resource.get("category"),
+                    "uc.response.family": resource.get("family"),
+                    "uc.response.self_link": resource.get("_self"),
+                    "uc.response.match_count": resource.get("match_count"),
+                    "uc.get_match_analysis_results.object_class": resource.get("object_class"),
+                    "uc.get_match_analysis_results.file_type": exif.get("FileType"),
+                    "uc.get_match_analysis_results.file_type_extension": exif.get("FileTypeExtension"),
+                    "uc.response.children": unique_children,
+                    "uc.response.json": json.dumps(resource, indent=2),
+                }
+                write_variables(variables)
+            case "Create Byte Code Yara":
+                resource = output.get("resource", {})
+                variables = {
+                    "uc.create_yara.yara_rule": resource.get("rule"),
+                    "uc.create_yara.yara_name": resource.get("name"),
+                    "uc.response.json": json.dumps(resource, indent=2),
+                }
+                write_variables(variables)
+            case "Get Matched Malicious Hashes":
+                resource = output.get("resources", {})
+                variables = {
+                    "uc.response.match_list": self.match_list,
+                    "uc.response.json": json.dumps(resource, indent=2)
+                }
+                write_variables(variables)
+            case "Get Processing Status":
+                resource = output.get("resource", {})
+                variables = {
+                    "uc.response.processing_completed": self.processed,
+                    "uc.response.json": json.dumps(resource, indent=2)
+                }
+                write_variables(variables)
+            case "Analyze Binary":
+                resources = output.get("resources", [])
+                resource = resources[0] if resources else {}
+                variables = {
+                    "uc.analyze_binary.md5": resource.get("md5"),
+                    "uc.analyze_binary.sha1": resource.get("sha1"),
+                    "uc.analyze_binary.sha256": resource.get("sha256"),
+                    "uc.analyze_binary.sha512": resource.get("sha512"),
+                    "uc.analyze_binary.filesize": resource.get("filesize"),
+                    "uc.analyze_binary.json": json.dumps(resource, indent=2),
+                }
+                write_variables(variables)
+            case _:
+                resource = output.get("resource", {})
+                variables = {
+                    "uc.response.json": json.dumps(resource, indent=2),
+                }
+                write_variables(variables)

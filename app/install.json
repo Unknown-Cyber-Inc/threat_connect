@@ -1,7 +1,7 @@
 {
   "appId": "230b94ee-2144-588c-94b7-711724ab1d75",
   "programName": "TCAB_-_949da663-bf76-43fe-826a-3ea97e2a97b3",
-  "displayName": "Unknown Cyber V2",
+  "displayName": "Unknown Cyber",
   "programVersion": "0.1.0",
   "minServerVersion": "7.2.0",
   "programLanguage": "PYTHON",
@@ -17,12 +17,6 @@
   "playbook": {
     "type": "Malware Analysis",
     "outputVariables": [
-      {
-        "name": "uc.response.response",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
       {
         "name": "uc.response.status_code",
         "type": "String",
@@ -72,14 +66,14 @@
         "encrypt": false
       },
       {
-        "name": "uc.response.matches",
+        "name": "uc.response.match_list",
         "type": "String",
         "intelType": [],
         "encrypt": false
       },
       {
-        "name": "uc.response.match_list",
-        "type": "String",
+        "name": "uc.response.uploaded_files",
+        "type": "StringArray",
         "intelType": [],
         "encrypt": false
       },
@@ -91,6 +85,114 @@
       },
       {
         "name": "uc.response.processing_completed",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.response.match_count",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.response.evasiveness",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.response.category",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.response.family",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.response.self_link",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.response.json",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.response.threat_level",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.create_yara.yara_name",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.create_yara.yara_rule",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.analyze_binary.filesize",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.analyze_binary.md5",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.analyze_binary.sha1",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.analyze_binary.sha256",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.analyze_binary.sha512",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.analyze_binary.json",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_match_analysis_results.object_class",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_match_analysis_results.file_type",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_match_analysis_results.file_type_extension",
         "type": "String",
         "intelType": [],
         "encrypt": false
