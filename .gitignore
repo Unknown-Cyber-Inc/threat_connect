@@ -4,6 +4,10 @@
 # Threat Connect Videos
 ThreatConnect Tutorial Videos/
 
+# TC Local Builds
+app/target/
+
 # Internal
 ExamplePlaybooks/Internal/
 Other/
+TC Commits/
