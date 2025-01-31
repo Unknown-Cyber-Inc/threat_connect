@@ -196,6 +196,12 @@
         "type": "String",
         "intelType": [],
         "encrypt": false
+      },
+      {
+        "name": "uc.response.match_list_array",
+        "type": "StringArray",
+        "intelType": [],
+        "encrypt": false
       }
     ]
   },

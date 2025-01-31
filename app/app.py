@@ -61,6 +61,7 @@ class App(PlaybookApp):
         self.api_response_message = None # Variable to store the API response
         self.api_response_raw = None # Variable to store the API response
         self.match_list = None
+        self.match_list_array = None
         self.processed = True
 
         # Initialize other
@@ -253,6 +254,12 @@ class App(PlaybookApp):
             [resource[self.in_.response_hash.lower()] for resource in resources]
         )
 
+        self.match_list_array = [
+            resource[self.in_.response_hash.lower()]
+            for resource in resources
+        ]
+        self.match_list_array = list(dict.fromkeys(self.match_list_array))
+
         if self.match_list == "":
             self.match_list = None
 
@@ -412,6 +419,7 @@ class App(PlaybookApp):
                 resource = output.get("resources", {})
                 variables = {
                     "uc.response.match_list": self.match_list,
+                    "uc.response.match_list_array": self.match_list_array,
                     "uc.response.json": json.dumps(resource, indent=2)
                 }
                 write_variables(variables)
