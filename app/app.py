@@ -19,6 +19,19 @@ TIMEOUT = 600
 # Only change if you understand what the consequences are.
 RETAIN_WRAPPER = True
 
+def get_list(value, name):
+    """Convert String or StringArray to List of Strings"""
+    if isinstance(value, str):
+        return [value]
+    elif isinstance(value, list):
+        return [str(item) for item in value]
+    elif hasattr(value, "value"):
+        if isinstance(value.value, list):
+            return [str(item) for item in value.value]
+        elif isinstance(value.value, str):
+            return [value.value]
+    return []
+
 
 class App(PlaybookApp):
     """Playbook App"""
@@ -42,7 +55,7 @@ class App(PlaybookApp):
 
         # ACTION: Analyze Binary
         if self.action == "Analyze Binary":
-            self.upload_password = self.in_.file_password
+            self.upload_passwords = get_list(self.in_.file_password, "file_password")
 
         # Initialize outputs
         self.api_response_message = None # Variable to store the API response
@@ -295,8 +308,10 @@ class App(PlaybookApp):
 
         # API Body Params
         data = {}
-        if self.upload_password:
-            data["password"] = self.upload_password
+        if self.upload_passwords:
+            password_params = "&".join(f"passwords={p}" for p in self.upload_passwords)
+        else:
+            password_params = ""
 
         # API Request Params
         post_params = {
@@ -305,7 +320,7 @@ class App(PlaybookApp):
         }
 
         file_response = self.fetch_with_retry(
-            "https://api.magic.unknowncyber.com/v2/files/",
+            f"https://api.magic.unknowncyber.com/v2/files/?{password_params}",
             method="post",
             files=upload_data,
             params=post_params,
