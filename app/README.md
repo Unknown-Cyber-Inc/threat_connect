@@ -3,7 +3,13 @@
 ## Release Notes
 
 ### 1.0.0
+
 * Initial Release
+
+### 1.1.0
+
+* Add support for an array of archive passwords to be passed into the "Analyze Binary" action.
+* Add a new return var of "uc.response.match_list_array" which returns a StringArray of binary matches.
 
 ## Description
 
@@ -39,9 +45,9 @@ Unknown Cyber's app is called "Unknown Cyber". In a Threat Connect Playbook, you
 | Variable | Type | Description | Examples |
 | -------- | ---- | ----------- | -------- |
 | tc.action | *String* | The type of action chosen for this job | |
-| uc.response.status_code | *String* | The api requestâs status code.  | |
+| uc.response.status_code | *String* | The api request's status code.  | |
 | uc.response.success | *String* | True if the api request was successful and false if not. | |
-| uc.response.errors | *String* | The api requestâs error message if the request errored. | |
+| uc.response.errors | *String* | The api request's error message if the request errored. | |
 | uc.response.json | *String* | The raw JSON response from Unknown Cyber's api. | |
 
 ---
@@ -132,7 +138,8 @@ Gets a list of hashes that match the entered hash. By default, only perfect matc
 
 | Variable | Type | Description | Examples |
 | -------- | ---- | ----------- | -------- |
-| uc.response.match_list | *StringArray* | A list of matches between the Max Similarity and Min Similarity. If no matches are found the value will be `None`.| |
+| uc.response.match_list | *String* | A single string list of matches between the Max Similarity and Min Similarity. If no matches are found the value will be `None`.| |
+| uc.response.match_list_array | *StringArray* | A list of matches between the Max Similarity and Min Similarity. If no matches are found the value will be `Empty`.| |
 
 ---
 
@@ -146,7 +153,7 @@ Upload a binary sample to Unknown Cyber for analysis.
 | ----- | ---- | ---- | ----------- |
 | File Sample* | *Binary,$File* | | Binary content to upload. |
 | Filename | *String,$Text* | | Name for the uploaded file. |
-| File Password | *String,$Text* | | Password used for file extraction from archive. |
+| File Password | *String,StringArray,$Text* | | Password used for file extraction from archive. |
 
 #### Outputs
 

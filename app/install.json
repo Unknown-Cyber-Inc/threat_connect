@@ -2,7 +2,7 @@
   "appId": "230b94ee-2144-588c-94b7-711724ab1d75",
   "programName": "TCAB_-_949da663-bf76-43fe-826a-3ea97e2a97b3",
   "displayName": "Unknown Cyber",
-  "programVersion": "1.0.1",
+  "programVersion": "1.1.0",
   "minServerVersion": "7.2.0",
   "programLanguage": "PYTHON",
   "programMain": "run.py",
