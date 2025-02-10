@@ -5,8 +5,8 @@
 from typing import Annotated, Union
 
 # third-party
-from pydantic import BaseModel
-from tcex.input.field_type import Choice, String, Sensitive, Binary
+from pydantic import BaseModel, validator
+from tcex.input.field_type import Choice, String, Sensitive, Binary, always_array
 from tcex.input.input import Input
 from tcex.input.model.app_playbook_model import AppPlaybookModel
 
@@ -25,8 +25,12 @@ class AnalyzeBinary(AppBaseModel):
     filename: String
     # pbd: Binary, vv: ${BINARY}
     file_sample: Binary
-    # pbd: String, vv: ${TEXT}
-    file_password: String | None
+    # pbd: String|StringArray, vv: ${TEXT}
+    file_password: Annotated[list[str], None]
+
+    _always_array = validator('file_password', allow_reuse=True, pre=True)(
+        always_array(allow_empty=True, include_empty=False, include_null=False, split_csv=True)
+    )
 
 class GetMatchAnalysisResults(AppBaseModel):
     """Action Model"""

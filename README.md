@@ -136,7 +136,7 @@ Gets a list of hashes that match the entered hash. By default, only perfect matc
 | Min Similarity* | *String,$Text* | 1 | Minimum similarity threshold between 0.7 and 1. |
 | Max Similarity* | *String,$Text* | 1 | Maximum similarity threshold between 0.7 and 1. |
 | Response Hash | *Dropdown* | Sha1 | This allows other hashes besides the default to be returned. |
-| No Match Error | *Boolean* | False | Setting this to True will cause the app to throw an error is their are no matches. |
+| No Match Error | *Boolean* | False | Setting this to True will cause the app to throw an error if there are no matches. |
 
 > [!NOTE]
 > If you enter a minimum similarity score higher than the maximum similarity score, the scores will be set to equal the Max Similarity entered.
