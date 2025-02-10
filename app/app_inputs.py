@@ -62,6 +62,7 @@ class GetMatchedMaliciousHashes(AppBaseModel):
     # pbd: String
     min_similarity: String
     no_match_error: bool = False
+    return_only_malicious_genomic_matches: bool = True
 
 
 class GetBoLLMBehaviorReport:
