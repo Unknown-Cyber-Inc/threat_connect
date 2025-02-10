@@ -202,6 +202,12 @@
         "type": "StringArray",
         "intelType": [],
         "encrypt": false
+      },
+      {
+        "name": "uc.get_cti_enrichment.detection_ratio",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
       }
     ]
   },
@@ -394,7 +400,7 @@
       "hidden": false,
       "feedDeployer": false,
       "viewRows": 1,
-      "sequence": 9,
+      "sequence": 8,
       "serviceConfig": false,
       "setup": false,
       "validValues": [
@@ -417,6 +423,25 @@
       "feedDeployer": false,
       "viewRows": 1,
       "note": "True - If their are no matches available, throw an error.\nFalse - The response for no matches will be an empty string (\"\").",
+      "sequence": 9,
+      "serviceConfig": false,
+      "setup": false,
+      "validValues": [],
+      "playbookDataType": [],
+      "intelType": []
+    },
+    {
+      "name": "return_only_malicious_genomic_matches",
+      "type": "Boolean",
+      "label": "Return only Malicious Genomic Matches",
+      "default": "true",
+      "allowMultiple": false,
+      "encrypt": false,
+      "required": false,
+      "hidden": false,
+      "feedDeployer": false,
+      "viewRows": 1,
+      "note": "When *True*,  returns only genomic sandbox matches that are known to be Malicious based on AV data.\nWhen *False*, returns all matching hashes.",
       "sequence": 10,
       "serviceConfig": false,
       "setup": false,

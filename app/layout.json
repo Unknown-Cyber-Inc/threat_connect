@@ -41,6 +41,10 @@
                     "name": "no_match_error"
                 },
                 {
+                    "display": "tc_action in ('Get Genomic Sandbox Matched Hashes')",
+                    "name": "return_only_malicious_genomic_matches"
+                },
+                {
                     "display": "tc_action in ('Analyze Binary')",
                     "name": "file_sample"
                 },

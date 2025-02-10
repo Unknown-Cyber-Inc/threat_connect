@@ -63,6 +63,7 @@ class App(PlaybookApp):
         self.match_list = None
         self.match_list_array = None
         self.processed = True
+        self.detection_ratio = 0
 
         # Initialize other
         self.output_data = None # Store Temporary output data
@@ -156,6 +157,30 @@ class App(PlaybookApp):
             f"https://api.magic.unknowncyber.com/v2/files/{hash_id}", method="get", params=params
         )
 
+        params={
+            "read_mask": ",".join(["detected", "sha256"]),
+            "no_links": True,
+            "page_size": 1000,
+            }
+
+        matches_request = self.fetch_with_retry(
+            f"https://api.magic.unknowncyber.com/v2/files/{hash_id}/similarities/",
+            method="get",
+            params=params
+        )
+
+        resources = matches_request.json().get("resources", [])
+
+        # Only keep resources where 'detected' is True
+        resources = [
+            resource
+            for resource in resources
+            if resource.get("detected")
+            is True
+        ]
+        self.detection_ratio = len(resources)
+        self.detection_ratio = min (self.detection_ratio, 1000)
+
         self.output_data = file_request
 
 
@@ -234,7 +259,7 @@ class App(PlaybookApp):
             response_hash = ""
 
         params={
-            "read_mask": response_hash,
+            "read_mask": ",".join(["detected", response_hash]),
             "no_links": True,
             "max_threshold": max_similarity,
             "min_threshold": min_similarity,
@@ -248,6 +273,15 @@ class App(PlaybookApp):
         )
 
         resources = file_request.json().get("resources", [])
+
+        # Only keep resources where 'detected' is True
+        if self.in_.return_only_malicious_genomic_matches:
+            resources = [
+                resource
+                for resource in resources
+                if resource.get("detected")
+                is self.in_.return_only_malicious_genomic_matches
+            ]
 
         # Compile a list of sha1 values
         self.match_list = ", ".join(
@@ -403,6 +437,7 @@ class App(PlaybookApp):
                     "uc.get_match_analysis_results.object_class": resource.get("object_class"),
                     "uc.get_match_analysis_results.file_type": exif.get("FileType"),
                     "uc.get_match_analysis_results.file_type_extension": exif.get("FileTypeExtension"),
+                    "uc.get_cti_enrichment.detection_ratio": f"{self.detection_ratio}/{resource.get('match_count')}",
                     "uc.response.children": unique_children,
                     "uc.response.json": json.dumps(resource, indent=2),
                 }
