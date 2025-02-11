@@ -424,45 +424,44 @@ class App(PlaybookApp):
                 children = resource.get("children", [])
                 unique_children = list(dict.fromkeys(children))
                 variables = {
-                    "uc.response.md5": resource.get("md5"),
-                    "uc.response.sha1": resource.get("sha1"),
-                    "uc.response.sha256": resource.get("sha256"),
-                    "uc.response.sha512": resource.get("sha512"),
-                    "uc.response.threat_level": resource.get("threat"),
-                    "uc.response.evasiveness": resource.get("evasiveness"),
-                    "uc.response.category": resource.get("category"),
-                    "uc.response.family": resource.get("family"),
-                    "uc.response.self_link": resource.get("_self"),
-                    "uc.response.match_count": resource.get("match_count"),
-                    "uc.get_match_analysis_results.object_class": resource.get("object_class"),
-                    "uc.get_match_analysis_results.file_type": exif.get("FileType"),
-                    "uc.get_match_analysis_results.file_type_extension": exif.get("FileTypeExtension"),
+                    "uc.get_cti_enrichment.md5": resource.get("md5"),
+                    "uc.get_cti_enrichment.sha1": resource.get("sha1"),
+                    "uc.get_cti_enrichment.sha256": resource.get("sha256"),
+                    "uc.get_cti_enrichment.sha512": resource.get("sha512"),
+                    "uc.get_cti_enrichment.evasiveness": resource.get("evasiveness"),
+                    "uc.get_cti_enrichment.category": resource.get("category"),
+                    "uc.get_cti_enrichment.family": resource.get("family"),
+                    "uc.get_cti_enrichment.self_link": resource.get("_self"),
+                    "uc.get_cti_enrichment.match_count": resource.get("match_count"),
+                    "uc.get_cti_enrichment.object_class": resource.get("object_class"),
+                    "uc.get_cti_enrichment.file_type": exif.get("FileType"),
+                    "uc.get_cti_enrichment.file_type_extension": exif.get("FileTypeExtension"),
                     "uc.get_cti_enrichment.detection_ratio": f"{self.detection_ratio}/{resource.get('match_count')}",
-                    "uc.response.children": unique_children,
-                    "uc.response.json": json.dumps(resource, indent=2),
+                    "uc.get_cti_enrichment.children": unique_children,
+                    "uc.get_cti_enrichment.json": json.dumps(resource, indent=2),
                 }
                 write_variables(variables)
             case "Create Genomic Byte Code Yara":
                 resource = output.get("resource", {})
                 variables = {
-                    "uc.create_yara.yara_rule": resource.get("rule"),
-                    "uc.create_yara.yara_name": resource.get("name"),
-                    "uc.response.json": json.dumps(resource, indent=2),
+                    "uc.create_genomic_byte_code_yara.yara_rule": resource.get("rule"),
+                    "uc.create_genomic_byte_code_yara.yara_name": resource.get("name"),
+                    "uc.create_genomic_byte_code_yara.json": json.dumps(resource, indent=2),
                 }
                 write_variables(variables)
             case "Get Genomic Sandbox Matched Hashes":
                 resource = output.get("resources", {})
                 variables = {
-                    "uc.response.match_list": self.match_list,
-                    "uc.response.match_list_array": self.match_list_array,
-                    "uc.response.json": json.dumps(resource, indent=2)
+                    "uc.get_genomic_sandbox_matched_hashes.match_list": self.match_list,
+                    "uc.get_genomic_sandbox_matched_hashes.match_list_array": self.match_list_array,
+                    "uc.get_genomic_sandbox_matched_hashes.json": json.dumps(resource, indent=2)
                 }
                 write_variables(variables)
             case "Get Processing Status":
                 resource = output.get("resource", {})
                 variables = {
-                    "uc.response.processing_completed": self.processed,
-                    "uc.response.json": json.dumps(resource, indent=2)
+                    "uc.get_processing_status.processing_completed": self.processed,
+                    "uc.get_processing_status.json": json.dumps(resource, indent=2)
                 }
                 write_variables(variables)
             case "Analyze Binary":

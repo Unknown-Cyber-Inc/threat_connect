@@ -36,8 +36,6 @@ outputData:
     type: String
   - name: uc.response.success
     type: String
-  - name: uc.error_message
-    type: String
   - name: uc.response.errors
     type: String
   - name: uc.response.md5
@@ -58,8 +56,6 @@ outputData:
     type: String
   - name: uc.response.success
     type: String
-  - name: uc.error_message
-    type: String
   - name: uc.response.errors
     type: String
   - name: uc.response.response
@@ -72,8 +68,6 @@ outputData:
     type: String
   - name: uc.response.success
     type: String
-  - name: uc.error_message
-    type: String
   - name: uc.response.errors
     type: String
   - name: uc.response.response
@@ -85,8 +79,6 @@ outputData:
   - name: uc.response.status_code
     type: String
   - name: uc.response.success
-    type: String
-  - name: uc.error_message
     type: String
   - name: uc.response.errors
     type: String
