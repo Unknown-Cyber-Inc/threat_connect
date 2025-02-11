@@ -21,23 +21,23 @@
         {
             "parameters": [
                 {
-                    "display": "tc_action in ('Get Match Analysis Results', 'Get Processing Status', 'Create Byte Code Yara', 'Get Matched Malicious Hashes', 'Get Bo LLM Behavior Report')",
+                    "display": "tc_action in ('Get CTI Enrichment', 'Get Processing Status', 'Create Genomic Byte Code Yara', 'Get Genomic Sandbox Matched Hashes', 'Get Bo LLM Behavior Report')",
                     "name": "hash_id"
                 },
                 {
-                    "display": "tc_action in ('Get Matched Malicious Hashes')",
+                    "display": "tc_action in ('Get Genomic Sandbox Matched Hashes')",
                     "name": "response_hash"
                 },
                 {
-                    "display": "tc_action in ('Get Matched Malicious Hashes')",
+                    "display": "tc_action in ('Get Genomic Sandbox Matched Hashes')",
                     "name": "min_similarity"
                 },
                 {
-                    "display": "tc_action in ('Get Matched Malicious Hashes')",
+                    "display": "tc_action in ('Get Genomic Sandbox Matched Hashes')",
                     "name": "max_similarity"
                 },
                 {
-                    "display": "tc_action in ('Get Matched Malicious Hashes')",
+                    "display": "tc_action in ('Get Genomic Sandbox Matched Hashes')",
                     "name": "no_match_error"
                 },
                 {

@@ -19,16 +19,16 @@ listDelimiter: '|'
 minServerVersion: 7.2.0
 note: This Unknown Cyber integration allows binary files to be uploaded to the Unknown Cyber platform and detailed results to be returns. Results include file info, matches, and yara generation.
 notePerAction:
-- action: Get Match Analysis Results
+- action: Get CTI Enrichment
   note: Retrieve analysis results for a file hash.
-- action: Create Byte Code Yara
+- action: Create Genomic Byte Code Yara
   note: Generate a Yara rule for the specified hash.
-- action: Get Matched Malicious Hashes
+- action: Get Genomic Sandbox Matched Hashes
   note: Retrieve matches related to the specified hash.
 - action: Analyze Binary
   note: Upload a sample to Unknown Cyber for analysis.
 outputData:
-- display: tc_action in ("Get Match Analysis Results")
+- display: tc_action in ("Get CTI Enrichment")
   outputVariables:
   - name: tc.action
     type: String
@@ -50,7 +50,7 @@ outputData:
     type: String
   - name: uc.response.response
     type: String
-- display: tc_action in ("Create Byte Code Yara")
+- display: tc_action in ("Create Genomic Byte Code Yara")
   outputVariables:
   - name: tc.action
     type: String
@@ -64,7 +64,7 @@ outputData:
     type: String
   - name: uc.response.response
     type: String
-- display: tc_action in ("Get Matched Malicious Hashes")
+- display: tc_action in ("Get Genomic Sandbox Matched Hashes")
   outputVariables:
   - name: tc.action
     type: String
@@ -120,9 +120,9 @@ sections:
     required: true
     type: Choice
     validValues:
-    - Get Match Analysis Results
-    - Create Byte Code Yara
-    - Get Matched Malicious Hashes
+    - Get CTI Enrichment
+    - Create Genomic Byte Code Yara
+    - Get Genomic Sandbox Matched Hashes
     - Analyze Binary
   sectionName: Action
 - params:
@@ -138,7 +138,7 @@ sections:
     - String
   sectionName: Connection
 - params:
-  - display: tc_action in ("Get Match Analysis Results")
+  - display: tc_action in ("Get CTI Enrichment")
     label: Hash ID
     name: hash_id
     note: A valid hash of the form ( MD5, SHA1, SHA256, SHA512 ).
@@ -148,7 +148,7 @@ sections:
     - ${TEXT}
     playbookDataType:
     - String
-  - display: tc_action in ("Create Byte Code Yara")
+  - display: tc_action in ("Create Genomic Byte Code Yara")
     label: Hash ID
     name: hash_id
     note: A valid hash of the form ( MD5, SHA1, SHA256, SHA512 ).
@@ -158,7 +158,7 @@ sections:
     - ${TEXT}
     playbookDataType:
     - String
-  - display: tc_action in ("Get Matched Malicious Hashes")
+  - display: tc_action in ("Get Genomic Sandbox Matched Hashes")
     label: Hash ID
     name: hash_id
     note: A valid hash of the form ( MD5, SHA1, SHA256, SHA512 ).
@@ -208,13 +208,13 @@ sections:
     label: Discard Unwrapped Archive
     name: discard_unwrapped_archive
     type: Boolean
-  - display: tc_action in ("Get Matched Malicious Hashes")
+  - display: tc_action in ("Get Genomic Sandbox Matched Hashes")
     label: Min Similarity
     name: min_similarity
     type: String
     playbookDataType:
     - String
-  - display: tc_action in ("Get Matched Malicious Hashes")
+  - display: tc_action in ("Get Genomic Sandbox Matched Hashes")
     label: Max Similarity
     name: max_similarity
     type: String

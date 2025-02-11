@@ -16,7 +16,7 @@ class AppBaseModel(AppPlaybookModel):
 
     # pbd: String, vv: ${KEYCHAIN}
     api_key: Union[String, Sensitive]
-    # vv: Get Match Analysis Results|Create Byte Code Yara|Get Matched Malicious Hashes|Analyze Binary
+    # vv: Get CTI Enrichment|Create Genomic Byte Code Yara|Get Genomic Sandbox Matched Hashes|Analyze Binary
     tc_action: Annotated[str, Choice]
 
 class AnalyzeBinary(AppBaseModel):
@@ -32,7 +32,7 @@ class AnalyzeBinary(AppBaseModel):
         always_array(allow_empty=True, include_empty=False, include_null=False, split_csv=True)
     )
 
-class GetMatchAnalysisResults(AppBaseModel):
+class GetCTIEnrichment(AppBaseModel):
     """Action Model"""
 
     # pbd: String, vv: ${TEXT}
@@ -44,13 +44,13 @@ class GetProcessingStatus(AppBaseModel):
     # pbd: String, vv: ${TEXT}
     hash_id: String
 
-class CreateByteCodeYara(AppBaseModel):
+class CreateGenomicByteCodeYara(AppBaseModel):
     """Action Model"""
 
     # pbd: String, vv: ${TEXT}
     hash_id: String
 
-class GetMatchedMaliciousHashes(AppBaseModel):
+class GetGenomicSandboxMatchedHashes(AppBaseModel):
     """Action Model"""
 
     # pbd: String, vv: ${TEXT}
@@ -83,9 +83,9 @@ class AppInputs:
         _action_model_map = {
             "analyze_binary": AnalyzeBinary,
             "get_processing_status": GetProcessingStatus,
-            "get_match_analysis_results": GetMatchAnalysisResults,
-            "create_byte_code_yara": CreateByteCodeYara,
-            "get_matched_malicious_hashes": GetMatchedMaliciousHashes,
+            "get_cti_enrichment": GetCTIEnrichment,
+            "create_genomic_byte_code_yara": CreateGenomicByteCodeYara,
+            "get_genomic_sandbox_matched_hashes": GetGenomicSandboxMatchedHashes,
             "get_bo_llm_behavior_report": GetBoLLMBehaviorReport,
         }
         tc_action_key = tc_action.lower().replace(' ', '_')

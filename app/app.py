@@ -133,7 +133,7 @@ class App(PlaybookApp):
         return None
 
 
-    def get_match_analysis_results(self):
+    def get_cti_enrichment(self):
         """Run the App main logic.
 
         This method should contain the core logic of the App.
@@ -184,7 +184,7 @@ class App(PlaybookApp):
         self.output_data = file_request
 
 
-    def create_byte_code_yara(self):
+    def create_genomic_byte_code_yara(self):
         """Run the App main logic.
 
         This method should contain the core logic of the App.
@@ -218,12 +218,12 @@ class App(PlaybookApp):
         self.output_data = file_request
 
 
-    def get_matched_malicious_hashes(self):
+    def get_genomic_sandbox_matched_hashes(self):
         """Run the App main logic.
 
         This method should contain the core logic of the App.
         """
-        self.tcex.log.info("Fetching Matched Malicious Hashes")
+        self.tcex.log.info("Fetching Genomic Sandbox Matched Hashes")
         default_sim = 1.0
         # Trim leading and trailing whitespace and initialize hash_id var
         hash_id = self.in_.hash_id.strip().lower()
@@ -418,7 +418,7 @@ class App(PlaybookApp):
                 self.out.variable(var_name, value)
 
         match self.action:
-            case "Get Match Analysis Results":
+            case "Get CTI Enrichment":
                 resource = output.get("resource", {})
                 exif = resource.get("exif", {})
                 children = resource.get("children", [])
@@ -442,7 +442,7 @@ class App(PlaybookApp):
                     "uc.response.json": json.dumps(resource, indent=2),
                 }
                 write_variables(variables)
-            case "Create Byte Code Yara":
+            case "Create Genomic Byte Code Yara":
                 resource = output.get("resource", {})
                 variables = {
                     "uc.create_yara.yara_rule": resource.get("rule"),
@@ -450,7 +450,7 @@ class App(PlaybookApp):
                     "uc.response.json": json.dumps(resource, indent=2),
                 }
                 write_variables(variables)
-            case "Get Matched Malicious Hashes":
+            case "Get Genomic Sandbox Matched Hashes":
                 resource = output.get("resources", {})
                 variables = {
                     "uc.response.match_list": self.match_list,

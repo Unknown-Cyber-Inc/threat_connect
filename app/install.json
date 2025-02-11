@@ -36,109 +36,13 @@
         "encrypt": false
       },
       {
-        "name": "uc.response.md5",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.response.sha1",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.response.sha256",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.response.sha512",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
         "name": "uc.response.errors",
         "type": "String",
         "intelType": [],
         "encrypt": false
       },
       {
-        "name": "uc.response.match_list",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.response.uploaded_files",
-        "type": "StringArray",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.response.children",
-        "type": "StringArray",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.response.processing_completed",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.response.match_count",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.response.evasiveness",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.response.category",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.response.family",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.response.self_link",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
         "name": "uc.response.json",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.response.threat_level",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.create_yara.yara_name",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.create_yara.yara_rule",
         "type": "String",
         "intelType": [],
         "encrypt": false
@@ -180,31 +84,139 @@
         "encrypt": false
       },
       {
-        "name": "uc.get_match_analysis_results.object_class",
+        "name": "uc.get_cti_enrichment.detection_ratio",
         "type": "String",
         "intelType": [],
         "encrypt": false
       },
       {
-        "name": "uc.get_match_analysis_results.file_type",
+        "name": "uc.get_cti_enrichment.file_type_extension",
         "type": "String",
         "intelType": [],
         "encrypt": false
       },
       {
-        "name": "uc.get_match_analysis_results.file_type_extension",
+        "name": "uc.get_cti_enrichment.file_type",
         "type": "String",
         "intelType": [],
         "encrypt": false
       },
       {
-        "name": "uc.response.match_list_array",
+        "name": "uc.get_cti_enrichment.object_class",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_processing_status.processing_completed",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_processing_status.json",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_genomic_sandbox_matched_hashes.match_list",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_genomic_sandbox_matched_hashes.match_list_array",
         "type": "StringArray",
         "intelType": [],
         "encrypt": false
       },
       {
-        "name": "uc.get_cti_enrichment.detection_ratio",
+        "name": "uc.get_genomic_sandbox_matched_hashes.json",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_cti_enrichment.children",
+        "type": "StringArray",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_cti_enrichment.json",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_cti_enrichment.evasiveness",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_cti_enrichment.category",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_cti_enrichment.family",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_cti_enrichment.self_link",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_cti_enrichment.match_count",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_cti_enrichment.sha512",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_cti_enrichment.sha256",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_cti_enrichment.sha1",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.get_cti_enrichment.md5",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.create_genomic_byte_code_yara.json",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.create_genomic_byte_code_yara.yara_rule",
+        "type": "String",
+        "intelType": [],
+        "encrypt": false
+      },
+      {
+        "name": "uc.create_genomic_byte_code_yara.yara_name",
         "type": "String",
         "intelType": [],
         "encrypt": false
@@ -227,10 +239,10 @@
       "serviceConfig": false,
       "setup": false,
       "validValues": [
-        "Get Match Analysis Results",
+        "Get CTI Enrichment",
         "Get Processing Status",
-        "Create Byte Code Yara",
-        "Get Matched Malicious Hashes",
+        "Create Genomic Byte Code Yara",
+        "Get Genomic Sandbox Matched Hashes",
         "Analyze Binary",
         "Get Bo LLM Behavior Report"
       ],
