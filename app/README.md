@@ -18,11 +18,9 @@
   * Create Byte Code Yara --> Create Genomic Byte Code Yara
   * Get Matched Malicious Hashes --> Get Genomic Sandbox Matched Hashes
 * Changes the output variable names to align with all actions.
-* Add detection ratio variable to "Get CTI Enrichment" data. This variable returns a String ratio representing detected matches divided by total matches. A detected match is one that has confirmed malicious AV data.
-
-  `Detected / Total`
-
 * Add the ability for users to only return malicious matches. In the "Get Genomic Sandbox Matched Hashes" action, the default is now set to only return matches that are malicious based on AV data. To turn this off, de-select the check box in the configuration variable "Return only Malicious Genomic Matches".
+* Add detection ratio variable to "Get CTI Enrichment" data. This variable returns a String ratio representing detected matches divided by total matches. A detected match is one that has confirmed malicious AV data.
+  `Detected / Total`
 
 ## Description
 

@@ -1,476 +1,12 @@
 {
-  "appId": "230b94ee-2144-588c-94b7-711724ab1d75",
-  "programName": "TCAB_-_949da663-bf76-43fe-826a-3ea97e2a97b3",
-  "displayName": "Unknown Cyber",
-  "programVersion": "1.1.0",
-  "minServerVersion": "7.2.0",
-  "programLanguage": "PYTHON",
-  "programMain": "run.py",
-  "languageVersion": "3.11.0",
-  "listDelimiter": "|",
-  "runtimeLevel": "Playbook",
   "allowOnDemand": true,
-  "allowRunAsUser": false,
   "apiUserTokenParam": false,
-  "note": "This Unknown Cyber integration allows binary files to be uploaded to the Unknown Cyber platform and detailed results to be returns. Results include file info, matches, and yara generation.",
-  "sdkVersion": "4.0.0",
-  "playbook": {
-    "type": "Malware Analysis",
-    "outputVariables": [
-      {
-        "name": "uc.response.status_code",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.response.success",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "tc.action",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.response.errors",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.response.json",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.analyze_binary.filesize",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.analyze_binary.md5",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.analyze_binary.sha1",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.analyze_binary.sha256",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.analyze_binary.sha512",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.analyze_binary.json",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_cti_enrichment.detection_ratio",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_cti_enrichment.file_type_extension",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_cti_enrichment.file_type",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_cti_enrichment.object_class",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_processing_status.processing_completed",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_processing_status.json",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_genomic_sandbox_matched_hashes.match_list",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_genomic_sandbox_matched_hashes.match_list_array",
-        "type": "StringArray",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_genomic_sandbox_matched_hashes.json",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_cti_enrichment.children",
-        "type": "StringArray",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_cti_enrichment.json",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_cti_enrichment.evasiveness",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_cti_enrichment.category",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_cti_enrichment.family",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_cti_enrichment.self_link",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_cti_enrichment.match_count",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_cti_enrichment.sha512",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_cti_enrichment.sha256",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_cti_enrichment.sha1",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.get_cti_enrichment.md5",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.create_genomic_byte_code_yara.json",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.create_genomic_byte_code_yara.yara_rule",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      },
-      {
-        "name": "uc.create_genomic_byte_code_yara.yara_name",
-        "type": "String",
-        "intelType": [],
-        "encrypt": false
-      }
-    ]
-  },
-  "params": [
-    {
-      "name": "tc_action",
-      "type": "Choice",
-      "label": "TC Action",
-      "allowMultiple": false,
-      "encrypt": false,
-      "required": true,
-      "hidden": false,
-      "feedDeployer": false,
-      "viewRows": 1,
-      "note": "The action to perform.",
-      "sequence": 0,
-      "serviceConfig": false,
-      "setup": false,
-      "validValues": [
-        "Get CTI Enrichment",
-        "Get Processing Status",
-        "Create Genomic Byte Code Yara",
-        "Get Genomic Sandbox Matched Hashes",
-        "Analyze Binary",
-        "Get Bo LLM Behavior Report"
-      ],
-      "playbookDataType": [],
-      "intelType": []
-    },
-    {
-      "name": "api_key",
-      "type": "String",
-      "label": "API Key",
-      "allowMultiple": false,
-      "encrypt": true,
-      "required": true,
-      "hidden": false,
-      "feedDeployer": false,
-      "viewRows": 1,
-      "note": "API key for Unknown Cyber.",
-      "sequence": 1,
-      "serviceConfig": false,
-      "setup": false,
-      "validValues": [
-        "${KEYCHAIN}"
-      ],
-      "playbookDataType": [
-        "String"
-      ],
-      "intelType": []
-    },
-    {
-      "name": "hash_id",
-      "type": "String",
-      "label": "Hash ID",
-      "allowMultiple": false,
-      "encrypt": false,
-      "required": true,
-      "hidden": false,
-      "feedDeployer": false,
-      "viewRows": 1,
-      "note": "A valid hash of the form ( MD5, SHA1, SHA256, SHA512 ).",
-      "sequence": 2,
-      "serviceConfig": false,
-      "setup": false,
-      "validValues": [
-        "${TEXT}"
-      ],
-      "playbookDataType": [
-        "String"
-      ],
-      "intelType": []
-    },
-    {
-      "name": "min_similarity",
-      "type": "String",
-      "label": "Min Similarity",
-      "default": "1",
-      "allowMultiple": false,
-      "encrypt": false,
-      "required": true,
-      "hidden": false,
-      "feedDeployer": false,
-      "viewRows": 1,
-      "note": "The minimum similarity value to be used.",
-      "sequence": 3,
-      "serviceConfig": false,
-      "setup": false,
-      "validValues": [],
-      "playbookDataType": [
-        "String"
-      ],
-      "intelType": []
-    },
-    {
-      "name": "max_similarity",
-      "type": "String",
-      "label": "Max Similarity",
-      "default": "1",
-      "allowMultiple": false,
-      "encrypt": false,
-      "required": true,
-      "hidden": false,
-      "feedDeployer": false,
-      "viewRows": 1,
-      "note": "The maximum match value to be returned.",
-      "sequence": 4,
-      "serviceConfig": false,
-      "setup": false,
-      "validValues": [],
-      "playbookDataType": [
-        "String"
-      ],
-      "intelType": []
-    },
-    {
-      "name": "file_sample",
-      "type": "String",
-      "label": "File Sample",
-      "allowMultiple": false,
-      "encrypt": false,
-      "required": true,
-      "hidden": false,
-      "feedDeployer": false,
-      "viewRows": 1,
-      "sequence": 5,
-      "serviceConfig": false,
-      "setup": false,
-      "validValues": [
-        "${FILE}"
-      ],
-      "playbookDataType": [
-        "Binary"
-      ],
-      "intelType": []
-    },
-    {
-      "name": "filename",
-      "type": "String",
-      "label": "Filename",
-      "allowMultiple": false,
-      "encrypt": false,
-      "required": false,
-      "hidden": false,
-      "feedDeployer": false,
-      "viewRows": 1,
-      "note": "(Optional) - Enter a name for the file.",
-      "sequence": 6,
-      "serviceConfig": false,
-      "setup": false,
-      "validValues": [
-        "${TEXT}"
-      ],
-      "playbookDataType": [
-        "String"
-      ],
-      "intelType": []
-    },
-    {
-      "name": "file_password",
-      "type": "String",
-      "label": "File Password",
-      "allowMultiple": false,
-      "encrypt": false,
-      "required": false,
-      "hidden": false,
-      "feedDeployer": false,
-      "viewRows": 1,
-      "note": "(Optional) - Enter a password for a archive.",
-      "sequence": 7,
-      "serviceConfig": false,
-      "setup": false,
-      "validValues": [
-        "${TEXT}"
-      ],
-      "playbookDataType": [
-        "String",
-        "StringArray"
-      ],
-      "intelType": []
-    },
-    {
-      "name": "response_hash",
-      "type": "Choice",
-      "label": "Response Hash",
-      "default": "SHA256",
-      "allowMultiple": false,
-      "encrypt": false,
-      "required": false,
-      "hidden": false,
-      "feedDeployer": false,
-      "viewRows": 1,
-      "sequence": 8,
-      "serviceConfig": false,
-      "setup": false,
-      "validValues": [
-        "MD5",
-        "SHA1",
-        "SHA256"
-      ],
-      "playbookDataType": [],
-      "intelType": []
-    },
-    {
-      "name": "no_match_error",
-      "type": "Boolean",
-      "label": "No Match Error",
-      "default": "false",
-      "allowMultiple": false,
-      "encrypt": false,
-      "required": false,
-      "hidden": false,
-      "feedDeployer": false,
-      "viewRows": 1,
-      "note": "True - If their are no matches available, throw an error.\nFalse - The response for no matches will be an empty string (\"\").",
-      "sequence": 9,
-      "serviceConfig": false,
-      "setup": false,
-      "validValues": [],
-      "playbookDataType": [],
-      "intelType": []
-    },
-    {
-      "name": "return_only_malicious_genomic_matches",
-      "type": "Boolean",
-      "label": "Return only Malicious Genomic Matches",
-      "default": "true",
-      "allowMultiple": false,
-      "encrypt": false,
-      "required": false,
-      "hidden": false,
-      "feedDeployer": false,
-      "viewRows": 1,
-      "note": "When *True*,  returns only genomic sandbox matches that are known to be Malicious based on AV data.\nWhen *False*, returns all matching hashes.",
-      "sequence": 10,
-      "serviceConfig": false,
-      "setup": false,
-      "validValues": [],
-      "playbookDataType": [],
-      "intelType": []
-    }
-  ],
-  "feeds": [],
-  "repeatingMinutes": [],
-  "publishOutFiles": [],
-  "runtimeContext": [],
-  "deprecatesApps": [],
+  "appId": "230b94ee-2144-588c-94b7-711724ab1d75",
+  "displayName": "Unknown Cyber",
   "features": [
-    "aotExecutionEnabled",
     "appBuilderCompliant",
     "fileParams",
+    "layoutEnabledApp",
     "redisPasswordSupport",
     "runtimeVariables",
     "secureParams"
@@ -481,5 +17,340 @@
     "malware",
     "analyze",
     "ai"
-  ]
+  ],
+  "languageVersion": "3.11",
+  "listDelimiter": "|",
+  "minServerVersion": "7.2.0",
+  "note": "This Unknown Cyber integration allows binary files to be uploaded to the Unknown Cyber platform and detailed results to be returns. Results include file info, matches, and yara generation.",
+  "params": [
+    {
+      "label": "TC Action",
+      "name": "tc_action",
+      "note": "The action to perform.",
+      "required": true,
+      "sequence": 0,
+      "type": "Choice",
+      "validValues": [
+        "Get CTI Enrichment",
+        "Get Processing Status",
+        "Create Genomic Byte Code Yara",
+        "Get Genomic Sandbox Matched Hashes",
+        "Analyze Binary",
+        "Get Bo LLM Behavior Report"
+      ],
+      "viewRows": 1
+    },
+    {
+      "encrypt": true,
+      "label": "API Key",
+      "name": "api_key",
+      "note": "API key for Unknown Cyber.",
+      "playbookDataType": [
+        "String"
+      ],
+      "required": true,
+      "sequence": 1,
+      "type": "String",
+      "validValues": [
+        "${KEYCHAIN}"
+      ],
+      "viewRows": 1
+    },
+    {
+      "label": "Hash ID",
+      "name": "hash_id",
+      "note": "A valid hash of the form ( MD5, SHA1, SHA256, SHA512 ).",
+      "playbookDataType": [
+        "String"
+      ],
+      "required": true,
+      "sequence": 2,
+      "type": "String",
+      "validValues": [
+        "${TEXT}"
+      ],
+      "viewRows": 1
+    },
+    {
+      "default": "1",
+      "label": "Min Similarity",
+      "name": "min_similarity",
+      "note": "The minimum similarity value to be used.",
+      "playbookDataType": [
+        "String"
+      ],
+      "required": true,
+      "sequence": 3,
+      "type": "String",
+      "viewRows": 1
+    },
+    {
+      "default": "1",
+      "label": "Max Similarity",
+      "name": "max_similarity",
+      "note": "The maximum match value to be returned.",
+      "playbookDataType": [
+        "String"
+      ],
+      "required": true,
+      "sequence": 4,
+      "type": "String",
+      "viewRows": 1
+    },
+    {
+      "label": "File Sample",
+      "name": "file_sample",
+      "playbookDataType": [
+        "Binary"
+      ],
+      "required": true,
+      "sequence": 5,
+      "type": "String",
+      "validValues": [
+        "${FILE}"
+      ],
+      "viewRows": 1
+    },
+    {
+      "label": "Filename",
+      "name": "filename",
+      "note": "(Optional) - Enter a name for the file.",
+      "playbookDataType": [
+        "String"
+      ],
+      "sequence": 6,
+      "type": "String",
+      "validValues": [
+        "${TEXT}"
+      ],
+      "viewRows": 1
+    },
+    {
+      "label": "File Password",
+      "name": "file_password",
+      "note": "(Optional) - Enter a password for a archive.",
+      "playbookDataType": [
+        "String",
+        "StringArray"
+      ],
+      "sequence": 7,
+      "type": "String",
+      "validValues": [
+        "${TEXT}"
+      ],
+      "viewRows": 1
+    },
+    {
+      "default": "SHA256",
+      "label": "Response Hash",
+      "name": "response_hash",
+      "sequence": 8,
+      "type": "Choice",
+      "validValues": [
+        "MD5",
+        "SHA1",
+        "SHA256"
+      ],
+      "viewRows": 1
+    },
+    {
+      "default": "false",
+      "label": "No Match Error",
+      "name": "no_match_error",
+      "note": "True - If their are no matches available, throw an error.\nFalse - The response for no matches will be an empty string (\"\").",
+      "sequence": 9,
+      "type": "Boolean",
+      "viewRows": 1
+    },
+    {
+      "default": "true",
+      "label": "Return only Malicious Genomic Matches",
+      "name": "return_only_malicious_genomic_matches",
+      "note": "When *True*,  returns only genomic sandbox matches that are known to be Malicious based on AV data.\nWhen *False*, returns all matching hashes.",
+      "sequence": 10,
+      "type": "Boolean",
+      "viewRows": 1
+    }
+  ],
+  "playbook": {
+    "outputVariables": [
+      {
+        "intelType": [],
+        "name": "uc.response.status_code",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.response.success",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "tc.action",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.response.errors",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.response.json",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.analyze_binary.filesize",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.analyze_binary.md5",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.analyze_binary.sha1",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.analyze_binary.sha256",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.analyze_binary.sha512",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.analyze_binary.json",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_cti_enrichment.detection_ratio",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_cti_enrichment.file_type_extension",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_cti_enrichment.file_type",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_cti_enrichment.object_class",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_processing_status.processing_completed",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_processing_status.json",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_genomic_sandbox_matched_hashes.match_list",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_genomic_sandbox_matched_hashes.match_list_array",
+        "type": "StringArray"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_genomic_sandbox_matched_hashes.json",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_cti_enrichment.children",
+        "type": "StringArray"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_cti_enrichment.json",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_cti_enrichment.evasiveness",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_cti_enrichment.category",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_cti_enrichment.family",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_cti_enrichment.self_link",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_cti_enrichment.match_count",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_cti_enrichment.sha512",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_cti_enrichment.sha256",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_cti_enrichment.sha1",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.get_cti_enrichment.md5",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.create_genomic_byte_code_yara.json",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.create_genomic_byte_code_yara.yara_rule",
+        "type": "String"
+      },
+      {
+        "intelType": [],
+        "name": "uc.create_genomic_byte_code_yara.yara_name",
+        "type": "String"
+      }
+    ],
+    "type": "Malware Analysis"
+  },
+  "programLanguage": "PYTHON",
+  "programMain": "run.py",
+  "programName": "TCAB_-_949da663-bf76-43fe-826a-3ea97e2a97b3",
+  "programVersion": "2.0.0",
+  "runtimeLevel": "Playbook",
+  "sdkVersion": "4.0.7"
 }
