@@ -14,6 +14,9 @@ TODO
 
 A ThreatConnect Playbook is a feature that automates cybersecurity workflows by linking various tasks and tools into a visual, logic-driven sequence. It enables users to streamline processes like threat detection, data enrichment, and incident response, all within the ThreatConnect platform.
 
+## Checkout the AI Generated DeepWiki Docs
+[Unknown Cyber's ThreatConnect App Docs](https://deepwiki.com/Unknown-Cyber-Inc/threat_connect)
+
 ### Examples
 
 - [1 - Upload File to Unknown Cyber](./ExamplePlaybooks/External/1%20-%20Upload%20File%20to%20Unknown%20Cyber.pbxz) - This is example playbook 1 of 3 for processing a file through Unknown Cyber. This playbook demonstrates how to use the "Analyze Binary" action in the Unknown Cyber App. When a document is uploaded to TC, it takes the document and it's archive password, if included, and sends it to Unknown Cyber for Analysis. It then creates a file indicator in TC and appends a "uc-processing" tag to the indicator to let stage 2 know the file being processed.
